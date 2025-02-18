@@ -7,17 +7,22 @@
 
     <fragment
         android:id="@+id/nuevaNoticiaFragment"
-        android:name="com.example.proyectofinal.Main.nuevaNoticia.NuevaNoticiaFragment"
-        android:label="fragment_nueva_noticia"
+        android:name="com.example.proyectofinal.Main.Fragments.NuevaNoticiaFragment"
+        android:label="Proximo Evento"
         tools:layout="@layout/fragment_nueva_noticia" />
     <fragment
         android:id="@+id/busquedaFragment"
-        android:name="com.example.proyectofinal.Main.busqueda.BusquedaFragment"
-        android:label="fragment_busqueda"
+        android:name="com.example.proyectofinal.Main.Fragments.BusquedaFragment"
+        android:label="Busqueda"
         tools:layout="@layout/fragment_busqueda" />
     <fragment
         android:id="@+id/misEventosFragment"
-        android:name="com.example.proyectofinal.Main.MisEventos.MisEventosFragment"
-        android:label="fragment_mis_eventos"
+        android:name="com.example.proyectofinal.Main.Fragments.MisEventosFragment"
+        android:label="Mis Eventos"
         tools:layout="@layout/fragment_mis_eventos" />
+    <fragment
+        android:id="@+id/ajustesFragment"
+        android:name="com.example.proyectofinal.Main.Fragments.AjustesFragment"
+        android:label="Ajustes"
+        tools:layout="@layout/fragment_ajustes" />
 </navigation>

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nuevaNoticiaFragment, R.id.busquedaFragment, R.id.misEventosFragment
-        ).build();
+        ).setOpenableLayout(binding.drawerLayout).build();
 
         if(mAuth.getCurrentUser() == null){
             redirectToLogin();
@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
         NavController navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment)).getNavController();
 
+        NavigationUI.setupWithNavController(binding.navView, navController);
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+
 
         getSupportActionBar().setTitle("Proximo Evento");
     }

@@ -1,4 +1,4 @@
-package com.example.proyectofinal.Main.MisEventos;
+package com.example.proyectofinal.Main.Fragments;
 
 import android.os.Bundle;
 

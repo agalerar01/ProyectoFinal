@@ -1,4 +1,4 @@
-package com.example.proyectofinal.Main.busqueda;
+package com.example.proyectofinal.Main.Fragments;
 
 import android.os.Bundle;
 
@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 
 import com.example.proyectofinal.R;
 
-public class BusquedaFragment extends Fragment {
+public class NuevaNoticiaFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_busqueda, container, false);
+        return inflater.inflate(R.layout.fragment_nueva_noticia, container, false);
     }
 }
