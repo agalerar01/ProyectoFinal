@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="ToDoList"
+        android:text="Event Season"
         android:textColor="#2196F3"
         android:textSize="32sp"
         android:textStyle="bold"
