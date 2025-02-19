@@ -8,14 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.proyectofinal.R;
+import com.example.proyectofinal.databinding.FragmentNuevaEventoBinding;
 
-public class NuevaNoticiaFragment extends Fragment {
+public class NuevaEventoFragment extends Fragment {
+
+    FragmentNuevaEventoBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nueva_noticia, container, false);
+
+        binding = FragmentNuevaEventoBinding.inflate(getLayoutInflater(), container, false);
+
+        return binding.getRoot();
     }
 }

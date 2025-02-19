@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nuevaNoticiaFragment"
-        android:name="com.example.proyectofinal.Main.Fragments.NuevaNoticiaFragment"
+        android:name="com.example.proyectofinal.Main.Fragments.NuevaEventoFragment"
         android:label="Proximo Evento"
-        tools:layout="@layout/fragment_nueva_noticia" />
+        tools:layout="@layout/fragment_nueva_evento" />
     <fragment
         android:id="@+id/busquedaFragment"
         android:name="com.example.proyectofinal.Main.Fragments.BusquedaFragment"
