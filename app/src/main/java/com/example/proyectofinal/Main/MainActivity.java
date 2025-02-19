@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.example.proyectofinal.databinding.ActivityMainBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -42,15 +44,23 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nuevaNoticiaFragment, R.id.busquedaFragment, R.id.misEventosFragment
         ).setOpenableLayout(binding.drawerLayout).build();
 
-        if(mAuth.getCurrentUser() == null){
+        /*if(mAuth.getCurrentUser() == null){
             redirectToLogin();
-        }
+        }*/
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
         NavController navController = ((NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment)).getNavController();
 
         NavigationUI.setupWithNavController(binding.navView, navController);
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
+        navigationView.getHeaderView(0).findViewById(R.id.cerrarSesion).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutUser();
+            }
+        });
 
         getSupportActionBar().setTitle("Proximo Evento");
     }
