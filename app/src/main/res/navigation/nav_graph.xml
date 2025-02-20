@@ -14,15 +14,36 @@
         android:id="@+id/busquedaFragment"
         android:name="com.example.proyectofinal.Main.Fragments.BusquedaFragment"
         android:label="Busqueda"
-        tools:layout="@layout/fragment_busqueda" />
+        tools:layout="@layout/fragment_busqueda" >
+        <action
+            android:id="@+id/action_busquedaFragment_to_detallesFragment"
+            app:destination="@id/detallesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/misEventosFragment"
         android:name="com.example.proyectofinal.Main.Fragments.MisEventosFragment"
         android:label="Mis Eventos"
-        tools:layout="@layout/fragment_mis_eventos" />
+        tools:layout="@layout/fragment_mis_eventos" >
+        <action
+            android:id="@+id/action_misEventosFragment_to_detallesFragment"
+            app:destination="@id/detallesFragment" />
+        <action
+            android:id="@+id/action_misEventosFragment_to_crearEventoFragment"
+            app:destination="@id/crearEventoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/ajustesFragment"
         android:name="com.example.proyectofinal.Main.Fragments.AjustesFragment"
         android:label="Ajustes"
         tools:layout="@layout/fragment_ajustes" />
+    <fragment
+        android:id="@+id/detallesFragment"
+        android:name="com.example.proyectofinal.Main.Fragments.DetallesFragment"
+        android:label="fragment_detalles"
+        tools:layout="@layout/fragment_detalles" />
+    <fragment
+        android:id="@+id/crearEventoFragment"
+        android:name="com.example.proyectofinal.Main.Fragments.CrearEventoFragment"
+        android:label="fragment_crear_evento"
+        tools:layout="@layout/fragment_crear_evento" />
 </navigation>
