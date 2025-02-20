@@ -128,7 +128,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="3"
-            android:inputType="number" />
+            android:inputType="number"
+            android:enabled="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner
