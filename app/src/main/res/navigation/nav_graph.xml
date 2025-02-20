@@ -39,11 +39,11 @@
     <fragment
         android:id="@+id/detallesFragment"
         android:name="com.example.proyectofinal.Main.Fragments.DetallesFragment"
-        android:label="fragment_detalles"
+        android:label="Detalles del Evento"
         tools:layout="@layout/fragment_detalles" />
     <fragment
         android:id="@+id/crearEventoFragment"
         android:name="com.example.proyectofinal.Main.Fragments.CrearEventoFragment"
-        android:label="fragment_crear_evento"
+        android:label="Creacion de Evento"
         tools:layout="@layout/fragment_crear_evento" />
 </navigation>
