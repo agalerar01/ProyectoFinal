@@ -9,20 +9,13 @@ public class Evento {
     private String nombre;
     private String ciudad;
     private String calle;
+    private String descripcion;
     private Long fechaInicio;
     private Long fechaFinal;
     private List<Comentario> lComentarios;
     private List<String> lApuntados;
 
     public Evento() {
-    }
-
-    public Evento(String nombre, String ciudad, String calle, Long fechaInicio, Long fechaFinal) {
-        this.nombre = nombre;
-        this.ciudad = ciudad;
-        this.calle = calle;
-        this.fechaInicio = fechaInicio;
-        this.fechaFinal = fechaFinal;
     }
 
     public String getId() {
@@ -87,5 +80,13 @@ public class Evento {
 
     public void setlApuntados(List<String> lApuntados) {
         this.lApuntados = lApuntados;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

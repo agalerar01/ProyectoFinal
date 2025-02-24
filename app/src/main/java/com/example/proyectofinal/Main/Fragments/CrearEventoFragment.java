@@ -90,7 +90,11 @@ public class CrearEventoFragment extends Fragment {
                 Evento e = new Evento();
 
                 e.setNombre(binding.nombre.getText().toString());
+                e.setCiudad(binding.ciudad.getText().toString());
+                e.setCalle(binding.calle.getText().toString());
+                e.setDescripcion(binding.descripcion.getText().toString());
                 e.setFechaInicio(fechaIni.getTime());
+                e.setFechaFinal(fechaFin.getTime());
 
                 rep.anadirEvento(e);
             }

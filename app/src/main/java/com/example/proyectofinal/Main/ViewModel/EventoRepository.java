@@ -14,28 +14,29 @@ import java.util.List;
 
 public class EventoRepository {
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     public void anadirEvento(Evento evento){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         String id = db.collection("Eventos").document().getId();
 
+        evento.setId(id);
+
         db.collection("Eventos").document(id)
-                .set(evento)
-                .addOnSuccessListener(command -> Log.d("Va?", "Creado"))
-                .addOnFailureListener(command -> Log.d("Va?", "No va"));
+                .set(evento);
     }
 
     public LiveData<List<Evento>> recuperarEventos(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         MutableLiveData<List<Evento>> eventosLiveData = new MutableLiveData<>();
         List<Evento> lEventos = new ArrayList<>();
 
-        db.collection("Eventos").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for(DocumentSnapshot doc : queryDocumentSnapshots){
-                lEventos.add(doc.toObject(Evento.class));
-            }
-        });
+        db.collection("Eventos").get()
+                .addOnSuccessListener(querySnapshot -> {
+                    for(DocumentSnapshot doc : querySnapshot){
+                        lEventos.add(doc.toObject(Evento.class));
+                    }
 
-        eventosLiveData.setValue(lEventos);
+                    eventosLiveData.setValue(lEventos);
+                 });
 
         return eventosLiveData;
     }
