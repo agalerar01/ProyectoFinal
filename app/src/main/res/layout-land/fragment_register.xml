@@ -72,7 +72,6 @@
         android:id="@+id/registroButton"
         android:layout_width="314dp"
         android:layout_height="51dp"
-        android:layout_marginTop="28dp"
         android:backgroundTint="#2196F3"
         android:text="Registrarse"
         android:textColor="#FFFFFF"
@@ -80,14 +79,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.038"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+        app:layout_constraintVertical_bias="0.168" />
 
     <Button
         android:id="@+id/volverLogin"
         android:layout_width="314dp"
         android:layout_height="51dp"
-        android:layout_marginTop="24dp"
         android:backgroundTint="#E3F2FD"
         android:text="Volver al Login"
         android:textColor="#2196F3"
@@ -95,8 +93,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.961"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.779" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+        app:layout_constraintVertical_bias="0.168" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googleSignInButton"
@@ -105,7 +103,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.955" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+        app:layout_constraintVertical_bias="0.811" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,7 +17,7 @@
         android:paddingRight="15dp"/>
 
     <ImageView
-        android:id="@+id/fotoPerfil"
+        android:id="@+id/fotoPerfilDrawer"
         android:layout_width="122dp"
         android:layout_height="138dp"
         android:src="@drawable/ic_launcher_background"

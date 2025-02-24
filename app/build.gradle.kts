@@ -63,4 +63,7 @@ dependencies {
 
     // Google Sign-In (Fuera de BOM, ya que no es parte de Firebase)
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation ("com.github.bumptech.glide:glide:4.13.2")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
+
 }

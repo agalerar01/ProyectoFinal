@@ -1,19 +1,19 @@
 package com.example.proyectofinal.Main;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
 import com.example.proyectofinal.Login.ActivityLogin;
 import com.example.proyectofinal.R;
 import com.example.proyectofinal.databinding.ActivityMainBinding;
@@ -61,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
                 logoutUser();
             }
         });
+
+        ImageView i= navigationView.getHeaderView(0).findViewById(R.id.fotoPerfilDrawer);
+
+        Glide.with(this)
+                .load(R.drawable.ic_launcher_background)
+                .circleCrop()
+                .into(i);
 
         getSupportActionBar().setTitle("Proximo Evento");
     }
