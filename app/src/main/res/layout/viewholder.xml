@@ -10,14 +10,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintViewHolder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="442dp"
+        android:layout_height="48dp"
         android:background="?android:attr/selectableItemBackground"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/view_Nombre"
-            android:layout_width="152dp"
+            android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_gravity="center_horizontal"
             android:autoSizeTextType="uniform"
@@ -25,20 +25,20 @@
             android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.064"
+            app:layout_constraintHorizontal_bias="0.253"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/fechaViewHolder"
-            android:layout_width="65dp"
+            android:layout_width="wrap_content"
             android:layout_height="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.825"
+            app:layout_constraintHorizontal_bias="0.605"
             app:layout_constraintStart_toStartOf="@+id/view_Nombre"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.515" />
+            app:layout_constraintVertical_bias="0.516" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

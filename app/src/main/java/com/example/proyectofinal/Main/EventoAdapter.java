@@ -109,7 +109,7 @@ public class EventoAdapter {
 
         private String formatearFecha(long timestamp) {
             Date date = new Date(timestamp);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             return sdf.format(date);
         }
     }

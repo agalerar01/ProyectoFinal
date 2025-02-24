@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ViewModelEvento extends AndroidViewModel {
 
-    public static MutableLiveData<Evento> eventoElegido = new MutableLiveData<>();
+    public MutableLiveData<Evento> eventoElegido = new MutableLiveData<>();
     EventoRepository rep = new EventoRepository();
 
     public ViewModelEvento(@NonNull Application application){
