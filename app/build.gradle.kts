@@ -58,8 +58,8 @@ dependencies {
     // Firebase BOM (Gestiona automáticamente las versiones de las dependencias de Firebase)
     implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
 
-    // Firebase Authentication
-    implementation("com.google.firebase:firebase-auth")
+    // Dependencia de Firestore
+    implementation("com.google.firebase:firebase-firestore")
 
     // Google Sign-In (Fuera de BOM, ya que no es parte de Firebase)
     implementation("com.google.android.gms:play-services-auth:20.7.0")

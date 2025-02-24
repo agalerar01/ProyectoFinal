@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nuevaNoticiaFragment, R.id.busquedaFragment, R.id.misEventosFragment
         ).setOpenableLayout(binding.drawerLayout).build();
 
-        /*if(mAuth.getCurrentUser() == null){
+        if(mAuth.getCurrentUser() == null){
             redirectToLogin();
-        }*/
+        }
 
         NavigationView navigationView = findViewById(R.id.nav_view);
 

@@ -5,15 +5,32 @@ import java.util.List;
 
 public class Evento {
 
+    private String id;
     private String nombre;
     private String ciudad;
     private String calle;
-    private Date fechaInicio;
-    private Date fechaFinal;
+    private Long fechaInicio;
+    private Long fechaFinal;
     private List<Comentario> lComentarios;
     private List<String> lApuntados;
 
     public Evento() {
+    }
+
+    public Evento(String nombre, String ciudad, String calle, Long fechaInicio, Long fechaFinal) {
+        this.nombre = nombre;
+        this.ciudad = ciudad;
+        this.calle = calle;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -40,19 +57,19 @@ public class Evento {
         this.calle = calle;
     }
 
-    public Date getFechaInicio() {
+    public Long getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(Long fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFinal() {
+    public Long getFechaFinal() {
         return fechaFinal;
     }
 
-    public void setFechaFinal(Date fechaFinal) {
+    public void setFechaFinal(Long fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
 
