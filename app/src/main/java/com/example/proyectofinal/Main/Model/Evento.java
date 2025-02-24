@@ -12,6 +12,7 @@ public class Evento {
     private String descripcion;
     private Long fechaInicio;
     private Long fechaFinal;
+    private String creador;
     private List<Comentario> lComentarios;
     private List<String> lApuntados;
 
@@ -88,5 +89,13 @@ public class Evento {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getCreador() {
+        return creador;
+    }
+
+    public void setCreador(String creador) {
+        this.creador = creador;
     }
 }

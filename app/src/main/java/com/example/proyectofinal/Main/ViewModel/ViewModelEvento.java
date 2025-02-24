@@ -24,4 +24,8 @@ public class ViewModelEvento extends AndroidViewModel {
     public LiveData<List<Evento>> recuperarEventos(){
         return rep.recuperarEventos();
     }
+
+    public LiveData<Evento> recuperarEventosProximo(){
+        return rep.recuperarEventosProximo();
+    }
 }

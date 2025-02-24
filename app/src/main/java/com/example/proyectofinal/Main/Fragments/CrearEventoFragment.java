@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.example.proyectofinal.Main.Model.Evento;
 import com.example.proyectofinal.Main.ViewModel.EventoRepository;
 import com.example.proyectofinal.databinding.FragmentCrearEventoBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +23,7 @@ public class CrearEventoFragment extends Fragment {
 
     FragmentCrearEventoBinding binding;
     EventoRepository rep = new EventoRepository();
+    FirebaseAuth auth = FirebaseAuth.getInstance();
     Date fechaIni, fechaFin;
 
     @Override
@@ -50,7 +52,10 @@ public class CrearEventoFragment extends Fragment {
                         (view1, selectedYear, selectedMonth, selectedDay) -> {
                             String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
                             binding.fechaInicio.setText(selectedDate);
-                            fechaIni = new Date(selectedDate);
+                            calendar.set(Calendar.YEAR, selectedYear);
+                            calendar.set(Calendar.MONTH, selectedMonth);
+                            calendar.set(Calendar.DAY_OF_MONTH, selectedDay);
+                            fechaIni = calendar.getTime();
                         },
                         year, month, day);
 
@@ -73,7 +78,10 @@ public class CrearEventoFragment extends Fragment {
                         (view1, selectedYear, selectedMonth, selectedDay) -> {
                             String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
                             binding.fechaFinal.setText(selectedDate);
-                            fechaFin = new Date(selectedDate);
+                            calendar.set(Calendar.YEAR, selectedYear);
+                            calendar.set(Calendar.MONTH, selectedMonth);
+                            calendar.set(Calendar.DAY_OF_MONTH, selectedDay);
+                            fechaFin = calendar.getTime();
                         },
                         year, month, day);
 
@@ -89,14 +97,54 @@ public class CrearEventoFragment extends Fragment {
 
                 Evento e = new Evento();
 
-                e.setNombre(binding.nombre.getText().toString());
-                e.setCiudad(binding.ciudad.getText().toString());
-                e.setCalle(binding.calle.getText().toString());
-                e.setDescripcion(binding.descripcion.getText().toString());
-                e.setFechaInicio(fechaIni.getTime());
-                e.setFechaFinal(fechaFin.getTime());
+                if(!binding.nombre.getText().toString().isEmpty()) {
+                    e.setNombre(binding.nombre.getText().toString());
+                }else{
+                    binding.nombre.setError("El campo no puede estar vacio");
+                    return;
+                }
+
+                if(!binding.ciudad.getText().toString().isEmpty()) {
+                    e.setCiudad(binding.ciudad.getText().toString());
+                }else{
+                    binding.ciudad.setError("El campo no puede estar vacio");
+                    return;
+                }
+
+                if (!binding.calle.getText().toString().isEmpty()) {
+                    e.setCalle(binding.calle.getText().toString());
+                }else{
+                    binding.calle.setError("El campo no puede estar vacio");
+                    return;
+                }
+
+                if (!binding.descripcion.getText().toString().isEmpty()) {
+                    e.setDescripcion(binding.descripcion.getText().toString());
+                }else{
+                    binding.descripcion.setError("El campo no puede estar vacio");
+                    return;
+                }
+
+
+                if (fechaIni != null) {
+                    e.setFechaInicio(fechaIni.getTime());
+                }else{
+                    binding.fechaInicio.setError("El campo no puede estar vacio");
+                    return;
+                }
+
+                if (fechaFin != null) {
+                    e.setFechaFinal(fechaFin.getTime());
+                }else{
+                    binding.fechaFinal.setError("El campo no puede estar vacio");
+                    return;
+                }
+
+                e.setCreador(auth.getCurrentUser().getEmail());
 
                 rep.anadirEvento(e);
+
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
         });
     }
