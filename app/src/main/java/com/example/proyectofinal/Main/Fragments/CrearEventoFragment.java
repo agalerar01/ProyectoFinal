@@ -144,7 +144,12 @@ public class CrearEventoFragment extends Fragment {
 
                 rep.anadirEvento(e);
 
-                requireActivity().getSupportFragmentManager().popBackStack();
+                binding.nombre.setText("");
+                binding.ciudad.setText("");
+                binding.calle.setText("");
+                binding.descripcion.setText("");
+                binding.fechaInicio.setText("");
+                binding.fechaFinal.setText("");
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.example.proyectofinal.Main.Fragments;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,8 @@ import com.example.proyectofinal.databinding.FragmentNuevaEventoBinding;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class NuevaEventoFragment extends Fragment {
 
@@ -38,6 +41,25 @@ public class NuevaEventoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ViewModelEvento viewModel = new ViewModelProvider(requireActivity()).get(ViewModelEvento.class);
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        executor.execute(() ->  {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            getActivity().runOnUiThread(() -> {
+                binding.progressBar.setVisibility(View.GONE);
+                binding.nombreEvento.setVisibility(View.VISIBLE);
+                binding.city.setVisibility(View.VISIBLE);
+                binding.calle.setVisibility(View.VISIBLE);
+                binding.descripcion.setVisibility(View.VISIBLE);
+                binding.fechas.setVisibility(View.VISIBLE);
+                binding.recyclerProximoEvento.setVisibility(View.VISIBLE);
+            });
+        });
 
         viewModel.recuperarEventosProximo().observe(getViewLifecycleOwner(), new Observer<Evento>() {
             @Override

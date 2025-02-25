@@ -1,7 +1,5 @@
 package com.example.proyectofinal.Main.ViewModel;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -54,8 +52,6 @@ public class EventoRepository {
     public LiveData<Evento> recuperarEventosProximo(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         MutableLiveData<Evento> eventosLiveData = new MutableLiveData<>();
-        Calendar calendar = Calendar.getInstance();
-
 
         db.collection("Eventos")
                 .orderBy("fechaInicio", Query.Direction.ASCENDING)
@@ -68,9 +64,22 @@ public class EventoRepository {
         return eventosLiveData;
     }
 
-    private String formatearFecha(long timestamp) {
-        Date date = new Date(timestamp);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        return sdf.format(date);
+    public LiveData<List<Evento>> recuperarEventosPorFecha(long timestamp){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        MutableLiveData<List<Evento>> eventosLiveData = new MutableLiveData<>();
+        List<Evento> lEventos = new ArrayList<>();
+
+        db.collection("Eventos")
+                .whereGreaterThan("fechaInicio", timestamp)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    for(DocumentSnapshot doc : querySnapshot){
+                        lEventos.add(doc.toObject(Evento.class));
+                    }
+
+                    eventosLiveData.setValue(lEventos);
+                });
+
+        return eventosLiveData;
     }
 }

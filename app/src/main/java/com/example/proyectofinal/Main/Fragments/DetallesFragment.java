@@ -20,6 +20,8 @@ import com.example.proyectofinal.databinding.FragmentDetallesBinding;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DetallesFragment extends Fragment {
 
@@ -39,6 +41,25 @@ public class DetallesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ViewModelEvento viewModelEvento = new ViewModelProvider(requireActivity()).get(ViewModelEvento.class);
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        executor.execute(() ->  {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            getActivity().runOnUiThread(() -> {
+                binding.progressBar2.setVisibility(View.GONE);
+                binding.nombre.setVisibility(View.VISIBLE);
+                binding.ciudad.setVisibility(View.VISIBLE);
+                binding.calle.setVisibility(View.VISIBLE);
+                binding.descripcion.setVisibility(View.VISIBLE);
+                binding.fechaLimite.setVisibility(View.VISIBLE);
+                binding.recyclerFotos.setVisibility(View.VISIBLE);
+            });
+        });
 
         viewModelEvento.eventoElegido.observe(getViewLifecycleOwner(), new Observer<Evento>() {
             @Override
