@@ -24,9 +24,12 @@ import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
 import com.example.proyectofinal.R;
 import com.example.proyectofinal.databinding.FragmentBusquedaBinding;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BusquedaFragment extends Fragment {
 
@@ -63,6 +66,8 @@ public class BusquedaFragment extends Fragment {
                     binding.fecha.setChecked(false);
                     binding.ciudad.setChecked(false);
                     binding.busqueda.setFocusable(true);
+                    binding.busqueda.setText("");
+                    ad.establecerListaEventos(new ArrayList<>());
                 }
             }
         });
@@ -74,6 +79,8 @@ public class BusquedaFragment extends Fragment {
                     binding.nombre.setChecked(false);
                     binding.ciudad.setChecked(false);
                     binding.busqueda.setFocusable(false);
+                    binding.busqueda.setText("");
+                    ad.establecerListaEventos(new ArrayList<>());
                 }
             }
         });
@@ -85,6 +92,8 @@ public class BusquedaFragment extends Fragment {
                     binding.fecha.setChecked(false);
                     binding.nombre.setChecked(false);
                     binding.busqueda.setFocusable(true);
+                    binding.busqueda.setText("");
+                    ad.establecerListaEventos(new ArrayList<>());
                 }
             }
         });
@@ -131,17 +140,47 @@ public class BusquedaFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if(binding.nombre.isChecked()){
-
+                    if(!s.toString().isEmpty()) {
+                        viewModel.recuperarEventosPorNombre(String.valueOf(s)).observe(getViewLifecycleOwner(), new Observer<List<Evento>>() {
+                            @Override
+                            public void onChanged(List<Evento> eventos) {
+                                ad.establecerListaEventos(eventos);
+                                ad.notifyDataSetChanged();
+                            }
+                        });
+                    }
                 } else if (binding.fecha.isChecked()) {
-                    viewModel.recuperarEventosPorFecha(fechaBusqueda.getTime()).observe(getViewLifecycleOwner(), new Observer<List<Evento>>() {
-                        @Override
-                        public void onChanged(List<Evento> eventos) {
-                            ad.establecerListaEventos(eventos);
-                            ad.notifyDataSetChanged();
-                        }
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+
+                    executor.execute(() -> {
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                        getActivity().runOnUiThread(() -> {
+                            if(fechaBusqueda != null) {
+                                viewModel.recuperarEventosPorFecha(fechaBusqueda.getTime()).observe(getViewLifecycleOwner(), new Observer<List<Evento>>() {
+                                    @Override
+                                    public void onChanged(List<Evento> eventos) {
+                                        ad.establecerListaEventos(eventos);
+                                        ad.notifyDataSetChanged();
+                                    }
+                                });
+                                fechaBusqueda = null;
+                            }
+                        });
                     });
                 }else if (binding.ciudad.isChecked()){
-
+                    if(!s.toString().isEmpty()) {
+                        viewModel.recuperarEventosPorCiudad(String.valueOf(s)).observe(getViewLifecycleOwner(), new Observer<List<Evento>>() {
+                            @Override
+                            public void onChanged(List<Evento> eventos) {
+                                ad.establecerListaEventos(eventos);
+                                ad.notifyDataSetChanged();
+                            }
+                        });
+                    }
                 }
             }
         });

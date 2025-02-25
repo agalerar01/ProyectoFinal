@@ -32,4 +32,12 @@ public class ViewModelEvento extends AndroidViewModel {
     public LiveData<List<Evento>> recuperarEventosPorFecha(long timestamp){
         return rep.recuperarEventosPorFecha(timestamp);
     }
+
+    public LiveData<List<Evento>> recuperarEventosPorNombre(String nom){
+        return rep.recuperarEventosPorNombre(nom);
+    }
+
+    public LiveData<List<Evento>> recuperarEventosPorCiudad(String nom){
+        return rep.recuperarEventosPorCiudad(nom);
+    }
 }

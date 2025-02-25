@@ -36,6 +36,7 @@
                 android:gravity="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,13 +52,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:text="Ciudad:" />
 
             <TextView
                 android:id="@+id/ciudad"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
+
+            <ProgressBar
+                android:id="@+id/progressBar5"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="200dp"
@@ -65,6 +74,7 @@
 
             <TextView
                 android:id="@+id/textView"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -72,6 +82,7 @@
 
             <TextView
                 android:id="@+id/calle"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -81,6 +92,7 @@
                 android:id="@+id/descripcion"
                 android:layout_width="306dp"
                 android:layout_height="206dp"
+                android:visibility="gone"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="16sp"
@@ -99,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Fecha"
+                android:visibility="gone"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -113,6 +126,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="20sp"
+                android:visibility="gone"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -136,6 +150,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerFotos"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

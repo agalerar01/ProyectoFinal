@@ -18,10 +18,11 @@ import java.util.Locale;
 
 public class EventoRepository {
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     public void anadirEvento(Evento evento){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         String id = db.collection("Eventos").document().getId();
 
         evento.setId(id);
@@ -31,7 +32,6 @@ public class EventoRepository {
     }
 
     public LiveData<List<Evento>> recuperarEventos(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         MutableLiveData<List<Evento>> eventosLiveData = new MutableLiveData<>();
         List<Evento> lEventos = new ArrayList<>();
 
@@ -50,7 +50,6 @@ public class EventoRepository {
     }
 
     public LiveData<Evento> recuperarEventosProximo(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         MutableLiveData<Evento> eventosLiveData = new MutableLiveData<>();
 
         db.collection("Eventos")
@@ -65,12 +64,48 @@ public class EventoRepository {
     }
 
     public LiveData<List<Evento>> recuperarEventosPorFecha(long timestamp){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         MutableLiveData<List<Evento>> eventosLiveData = new MutableLiveData<>();
         List<Evento> lEventos = new ArrayList<>();
 
         db.collection("Eventos")
                 .whereGreaterThan("fechaInicio", timestamp)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    for(DocumentSnapshot doc : querySnapshot){
+                        lEventos.add(doc.toObject(Evento.class));
+                    }
+
+                    eventosLiveData.setValue(lEventos);
+                });
+
+        return eventosLiveData;
+    }
+
+    public LiveData<List<Evento>> recuperarEventosPorNombre(String nom){
+        MutableLiveData<List<Evento>> eventosLiveData = new MutableLiveData<>();
+        List<Evento> lEventos = new ArrayList<>();
+
+        db.collection("Eventos")
+                .orderBy("nombre")
+                .startAt(nom)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    for(DocumentSnapshot doc : querySnapshot){
+                        lEventos.add(doc.toObject(Evento.class));
+                    }
+
+                    eventosLiveData.setValue(lEventos);
+                });
+
+        return eventosLiveData;
+    }
+
+    public LiveData<List<Evento>> recuperarEventosPorCiudad(String nom){
+        MutableLiveData<List<Evento>> eventosLiveData = new MutableLiveData<>();
+        List<Evento> lEventos = new ArrayList<>();
+
+        db.collection("Eventos")
+                .whereEqualTo("ciudad", nom)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     for(DocumentSnapshot doc : querySnapshot){
