@@ -50,15 +50,17 @@ public class NuevaEventoFragment extends Fragment {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            getActivity().runOnUiThread(() -> {
-                binding.progressBar.setVisibility(View.GONE);
-                binding.nombreEvento.setVisibility(View.VISIBLE);
-                binding.city.setVisibility(View.VISIBLE);
-                binding.calle.setVisibility(View.VISIBLE);
-                binding.descripcion.setVisibility(View.VISIBLE);
-                binding.fechas.setVisibility(View.VISIBLE);
-                binding.recyclerProximoEvento.setVisibility(View.VISIBLE);
-            });
+            if(getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.nombreEvento.setVisibility(View.VISIBLE);
+                    binding.city.setVisibility(View.VISIBLE);
+                    binding.calle.setVisibility(View.VISIBLE);
+                    binding.descripcion.setVisibility(View.VISIBLE);
+                    binding.fechas.setVisibility(View.VISIBLE);
+                    binding.recyclerProximoEvento.setVisibility(View.VISIBLE);
+                });
+            }
         });
 
         viewModel.recuperarEventosProximo().observe(getViewLifecycleOwner(), new Observer<Evento>() {

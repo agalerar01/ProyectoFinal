@@ -5,9 +5,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -30,11 +32,13 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private GoogleSignInClient googleSignInClient;
+    SharedPreferencesHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView((binding = ActivityMainBinding.inflate(getLayoutInflater())).getRoot());
+        helper = new SharedPreferencesHelper(getLayoutInflater().getContext());
 
         setSupportActionBar(binding.toolbar);
 
@@ -65,9 +69,34 @@ public class MainActivity extends AppCompatActivity {
         ImageView i= navigationView.getHeaderView(0).findViewById(R.id.fotoPerfilDrawer);
 
         Glide.with(this)
-                .load(R.drawable.ic_launcher_background)
+                .load(R.drawable.no_foto)
+                .override(240,240)
                 .circleCrop()
                 .into(i);
+
+        if(helper.devolverTemaOscuro()){
+            navigationView.getHeaderView(0).setBackgroundColor(getResources().getColor(R.color.azul_crosscut));
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            getDelegate().applyDayNight();
+        }else{
+            navigationView.getHeaderView(0).setBackgroundColor(getResources().getColor(R.color.azul_pastel));
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            getDelegate().applyDayNight();
+        }
+
+        if (mAuth.getCurrentUser() != null) {
+            if(isGoogleLogin()){
+                Glide.with(this)
+                        .load(mAuth.getCurrentUser().getPhotoUrl())
+                        .override(240,240)
+                        .circleCrop()
+                        .into(i);
+            }
+
+            TextView e = navigationView.getHeaderView(0).findViewById(R.id.correo);
+
+            e.setText(mAuth.getCurrentUser().getEmail());
+        }
 
         getSupportActionBar().setTitle("Proximo Evento");
     }

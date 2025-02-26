@@ -2,6 +2,9 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.ProyectoFinal" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/azul_crosscut</item>
+        <item name="colorOnPrimary">@color/azul_brilliant</item>
+
+        <item name="android:statusBarColor">@color/gris_crosscut</item>
     </style>
 </resources>

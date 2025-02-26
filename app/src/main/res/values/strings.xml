@@ -3,4 +3,5 @@
     <string name="default_web_client_id">721644862610-1mderoi4sep9hbdip7avdbqsgm42h1dg.apps.googleusercontent.com</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="modo_oscuro">Para aplicar los cambios debe reiniciar la aplicacion</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.proyectofinal.Main.SharedPreferencesHelper;
 import com.example.proyectofinal.R;
@@ -80,6 +81,8 @@ public class AparienciaFragment extends Fragment {
                 helper.guardarTemaOscuro(binding.switchModoOscuro.isChecked());
                 helper.guardarRecordatorio(binding.switchRecordador.isChecked());
                 helper.guardarDiasRecordatorio(Integer.parseInt(String.valueOf(binding.diasRecordatorio.getText())));
+
+                Toast.makeText(getActivity(), R.string.modo_oscuro, Toast.LENGTH_LONG).show();
             }
         });
     }

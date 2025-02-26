@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/nuevaNoticiaFragment"
-        android:icon="@drawable/common_google_signin_btn_text_dark"
+        android:icon="@drawable/senal"
         android:title="Próximo Evento" />
 
     <item
         android:id="@+id/busquedaFragment"
-        android:icon="@drawable/common_google_signin_btn_text_dark"
+        android:icon="@drawable/busqueda"
         android:title="Búsqueda" />
 
     <item
         android:id="@+id/misEventosFragment"
-        android:icon="@drawable/common_google_signin_btn_text_dark"
+        android:icon="@drawable/documento"
         android:title="Mis Eventos" />
 
     <item
@@ -57,8 +57,13 @@
         android:enabled="false" />
 
     <item
+        android:id="@+id/separador9"
+        android:title=" "
+        android:enabled="false" />
+
+    <item
         android:id="@+id/ajustesFragment"
-        android:icon="@drawable/common_google_signin_btn_text_dark"
+        android:icon="@drawable/configuraciones"
         android:title="Ajustes" />
 
 </menu>
