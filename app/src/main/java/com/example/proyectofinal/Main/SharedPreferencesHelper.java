@@ -14,6 +14,8 @@ public class SharedPreferencesHelper {
     private static final String PREFS_MOSTRAR_CORREO_EN_EVENTO = "mostrarCorreoEnEvento";
     private static final String PREFS_MOSTRAR_CORREO_EN_COMENTARIOS = "mostrarCorreoEnComentarios";
     private static final String PREFS_MOSTRAR_COMENTARIOS = "mostrarComentarios";
+    private static final String PREFS_PRIMERA_VEZ = "primeraVez";
+    private static final String PREFS_NOM_USU = "nomUsu";
 
     public SharedPreferencesHelper(Context context) {
         sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -65,5 +67,21 @@ public class SharedPreferencesHelper {
 
     public boolean devolverMostrarComentarios(){
         return sharedPreferences.getBoolean(PREFS_MOSTRAR_COMENTARIOS, true);
+    }
+
+    public void guardarPrimeraVez(boolean b){
+        sharedPreferences.edit().putBoolean(PREFS_PRIMERA_VEZ, b).apply();
+    }
+
+    public boolean devolverPrimeraVez(){
+        return sharedPreferences.getBoolean(PREFS_PRIMERA_VEZ, true);
+    }
+
+    public void guardarNomUsu(String nom){
+        sharedPreferences.edit().putString(PREFS_NOM_USU, nom).apply();
+    }
+
+    public String devolverNomUsu(){
+        return sharedPreferences.getString(PREFS_NOM_USU, "Invitado");
     }
 }

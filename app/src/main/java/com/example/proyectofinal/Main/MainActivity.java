@@ -1,10 +1,13 @@
 package com.example.proyectofinal.Main;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private GoogleSignInClient googleSignInClient;
     SharedPreferencesHelper helper;
+    View popupView;
+    PopupWindow popupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +80,18 @@ public class MainActivity extends AppCompatActivity {
                 .circleCrop()
                 .into(i);
 
+        cambiarTema(navigationView);
+
+        imagenGoogle(navigationView, i);
+
+        TextView e = navigationView.getHeaderView(0).findViewById(R.id.nombreUsu);
+
+        cambiarNomUsu(e);
+
+        getSupportActionBar().setTitle("Proximo Evento");
+    }
+
+    private void cambiarTema(NavigationView navigationView){
         if(helper.devolverTemaOscuro()){
             navigationView.getHeaderView(0).setBackgroundColor(getResources().getColor(R.color.azul_crosscut));
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -83,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             getDelegate().applyDayNight();
         }
+    }
 
+    private void imagenGoogle(NavigationView navigationView, ImageView i){
         if (mAuth.getCurrentUser() != null) {
             if(isGoogleLogin()){
                 Glide.with(this)
@@ -97,8 +117,41 @@ public class MainActivity extends AppCompatActivity {
 
             e.setText(mAuth.getCurrentUser().getEmail());
         }
+    }
 
-        getSupportActionBar().setTitle("Proximo Evento");
+    private void cambiarNomUsu(TextView e){
+        if(isGoogleLogin()) {
+            e.setText(mAuth.getCurrentUser().getDisplayName());
+        }else {
+            if (helper.devolverPrimeraVez()) {
+                popUp(e);
+                helper.guardarPrimeraVez(false);
+            } else {
+                e.setText(helper.devolverNomUsu());
+            }
+        }
+    }
+
+    private void popUp(TextView e){
+        popupView = getLayoutInflater().inflate(R.layout.popup, null);
+
+        popupWindow = new PopupWindow(popupView,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true);
+
+        popupWindow.setOutsideTouchable(false);
+        popupWindow.setFocusable(true);
+
+        Button btn_guardar = popupView.findViewById(R.id.guardar);
+        btn_guardar.setOnClickListener(v -> {
+            TextInputEditText t = popupView.findViewById(R.id.nomUsu);
+            helper.guardarNomUsu(t.getText().toString());
+            e.setText(t.getText().toString());
+            popupWindow.dismiss();
+        });
+
+        binding.getRoot().post(() -> popupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0));
     }
 
     private void logoutUser() {
