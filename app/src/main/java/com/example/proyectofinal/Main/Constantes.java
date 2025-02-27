@@ -1,0 +1,6 @@
+package com.example.proyectofinal.Main;
+
+public class Constantes {
+
+    public final static String API_KEY= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsbmd5ZnppZ2N6YWRqb3lldGl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA2NzA5MTYsImV4cCI6MjA1NjI0NjkxNn0.Rhap7z8K2nATTXdJsGTqpWZZC0LSdPNYCIki5GETDAQ";
+}

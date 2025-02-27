@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.proyectofinal.Main.SharedPreferencesHelper;
+import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
 import com.example.proyectofinal.R;
 import com.example.proyectofinal.databinding.FragmentAparienciaBinding;
 

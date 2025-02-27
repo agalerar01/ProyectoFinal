@@ -1,37 +1,55 @@
 package com.example.proyectofinal.Main.Fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.proyectofinal.Main.ImageUtils;
 import com.example.proyectofinal.Main.Model.Evento;
 import com.example.proyectofinal.Main.ViewModel.EventoRepository;
+import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
 import com.example.proyectofinal.databinding.FragmentCrearEventoBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.xml.transform.Result;
+
 public class CrearEventoFragment extends Fragment {
 
-    FragmentCrearEventoBinding binding;
-    EventoRepository rep = new EventoRepository();
-    FirebaseAuth auth = FirebaseAuth.getInstance();
-    Date fechaIni, fechaFin;
+    private FragmentCrearEventoBinding binding;
+    private ViewModelEvento viewModel;
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private Date fechaIni, fechaFin;
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
+    private Uri selectedImageUri;
+    private byte[] fotoBlob;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentCrearEventoBinding.inflate(getLayoutInflater(), container, false);
-
+        viewModel = new ViewModelProvider(requireActivity()).get(ViewModelEvento.class);
         return binding.getRoot();
     }
 
@@ -91,6 +109,28 @@ public class CrearEventoFragment extends Fragment {
             }
         });
 
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) { //  Se ejecuta automáticamente cuando el usuario selecciona una imagen o cancela.
+                        // Si se ha seleccionado una imagen, la recuperamos del parámetro del método
+                        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                            selectedImageUri = result.getData().getData();  // URI de la imagen seleccionada
+                            fotoBlob = ImageUtils.uriToBlob(requireContext().getContentResolver(), selectedImageUri); // Conseguimos el BLOB a partir de la URI
+
+                            binding.imagenEvento.setImageBitmap(ImageUtils.blobToBitmap(fotoBlob));  // Muestra la imagen en el ImageView
+                            binding.imagenEvento.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+        );
+
+        binding.imagen.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            imagePickerLauncher.launch(intent);
+        });
+
         binding.botonGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,7 +182,13 @@ public class CrearEventoFragment extends Fragment {
 
                 e.setCreador(auth.getCurrentUser().getEmail());
 
-                rep.anadirEvento(e);
+                e.setlApuntados(new ArrayList<>());
+
+                e.setlComentarios(new ArrayList<>());
+
+                e.setlUrls(new ArrayList<>());
+
+                viewModel.aniadirEvento(e, selectedImageUri);
 
                 binding.nombre.setText("");
                 binding.ciudad.setText("");

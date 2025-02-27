@@ -74,7 +74,7 @@
             android:text="Eliminar Foto" />
 
         <ImageView
-            android:id="@+id/imagenTarea"
+            android:id="@+id/imagenEvento"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>

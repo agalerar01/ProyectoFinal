@@ -11,16 +11,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.proyectofinal.Main.EventoAdapter;
+import com.example.proyectofinal.Main.Controladores.EventoAdapter;
 import com.example.proyectofinal.Main.Model.Evento;
 import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
 import com.example.proyectofinal.R;
-import com.example.proyectofinal.databinding.FragmentBusquedaBinding;
 import com.example.proyectofinal.databinding.FragmentMisEventosBinding;
 
 import java.util.List;

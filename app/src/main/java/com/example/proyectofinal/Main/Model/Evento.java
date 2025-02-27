@@ -15,8 +15,23 @@ public class Evento {
     private String creador;
     private List<Comentario> lComentarios;
     private List<String> lApuntados;
+    private List<String> lUrls;
 
     public Evento() {
+    }
+
+    public Evento(String id, String nombre, String ciudad, String calle, String descripcion, Long fechaInicio, Long fechaFinal, String creador, List<Comentario> lComentarios, List<String> lApuntados, List<String> lUrls) {
+        this.id = id;
+        this.nombre = nombre;
+        this.ciudad = ciudad;
+        this.calle = calle;
+        this.descripcion = descripcion;
+        this.fechaInicio = fechaInicio;
+        this.fechaFinal = fechaFinal;
+        this.creador = creador;
+        this.lComentarios = lComentarios;
+        this.lApuntados = lApuntados;
+        this.lUrls = lUrls;
     }
 
     public String getId() {
@@ -97,5 +112,17 @@ public class Evento {
 
     public void setCreador(String creador) {
         this.creador = creador;
+    }
+
+    public List<String> getlUrls() {
+        return lUrls;
+    }
+
+    public void setlUrls(List<String> lUrls) {
+        this.lUrls = lUrls;
+    }
+
+    public void aniadirFoto(String Url) {
+        lUrls.add(Url);
     }
 }

@@ -106,7 +106,7 @@
                 android:layout_gravity="center"/>
 
             <ImageView
-                android:id="@+id/imagenTarea"
+                android:id="@+id/imagenEvento"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginBottom="8dp"

@@ -10,8 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.proyectofinal.Main.SharedPreferencesHelper;
-import com.example.proyectofinal.R;
+import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
 import com.example.proyectofinal.databinding.FragmentPrivacidadBinding;
 
 public class PrivacidadFragment extends Fragment {

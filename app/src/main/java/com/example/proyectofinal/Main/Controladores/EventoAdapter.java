@@ -1,6 +1,5 @@
-package com.example.proyectofinal.Main;
+package com.example.proyectofinal.Main.Controladores;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
