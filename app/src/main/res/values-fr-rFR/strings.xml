@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ProjetFinal</string>
+    <string name="theme">Thème de l\'application</string>
+    <string name="nightmode">Activer le mode nuit</string>
+    <string name="language">Langue de l\'application</string>
+    <string name="eventadviser">Conseiller d\'événements</string>
+    <string name="adviser">Activer le conseiller</string>
+    <string name="days">Jours avant le rappel</string>
+    <string name="restart">Réinitialiser aux paramètres par défaut</string>
+    <string name="savechanges">Enregistrer les modifications</string>
+    <string name="name">Nom</string>
+    <string name="date">Date</string>
+    <string name="city">Ville</string>
+    <string name="search">Rechercher</string>
+    <string name="street">Rue</string>
+    <string name="description">Description</string>
+    <string name="datestart">Date de début</string>
+    <string name="datend">Date de fin</string>
+    <string name="save">Enregistrer</string>
+    <string name="setphoto">Définir des photos</string>
+    <string name="join">Rejoindre</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="singin">Se connecter</string>
+    <string name="singup">S\'inscrire</string>
+    <string name="noevents">Aucun événement n\'a encore été créé. Pourquoi ne pas en créer un ?</string>
+    <string name="repeatpassword">Répéter le mot de passe</string>
+    <string name="emailjoin">Afficher mon email lors de l\'inscription à un événement</string>
+    <string name="emailcomments">Afficher mon email dans les commentaires</string>
+    <string name="profilepicture">Photo de profil</string>
+    <string name="showcomments">Activer les commentaires</string>
+    <string name="privacity">Confidentialité</string>
+    <string name="changephoto">Changer la photo</string>
+    <string name="appearance">Apparence</string>
+
+</resources>
