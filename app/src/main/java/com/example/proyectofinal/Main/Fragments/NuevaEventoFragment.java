@@ -8,13 +8,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.proyectofinal.Main.Controladores.EventoAdapter;
+import com.example.proyectofinal.Main.Controladores.FotoAdapter;
 import com.example.proyectofinal.Main.Model.Evento;
 import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
+import com.example.proyectofinal.R;
 import com.example.proyectofinal.databinding.FragmentNuevaEventoBinding;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +47,7 @@ public class NuevaEventoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ViewModelEvento viewModel = new ViewModelProvider(requireActivity()).get(ViewModelEvento.class);
+        NavController navController = Navigation.findNavController(requireView());
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
@@ -71,6 +78,15 @@ public class NuevaEventoFragment extends Fragment {
                 binding.calle.setText(evento.getCalle());
                 binding.descripcion.setText(evento.getDescripcion());
                 binding.fechas.setText("["+formatearFecha(evento.getFechaInicio())+"] / ["+formatearFecha(evento.getFechaFinal())+"]");
+
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+                binding.recyclerProximoEvento.setLayoutManager(gridLayoutManager);
+
+                FotoAdapter ad = new FotoAdapter();
+                binding.recyclerProximoEvento.setAdapter(ad.recuperarAdapter(getLayoutInflater(),navController, R.id.action_misEventosFragment_to_detallesFragment, view,viewModel, requireActivity()));
+
+                ad.establecerListaFotos(evento.getlUrls());
+                ad.notifyDataSetChanged();
             }
         });
     }

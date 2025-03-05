@@ -1,5 +1,6 @@
 package com.example.proyectofinal.Main.Controladores;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.proyectofinal.Main.Model.Evento;
 import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
 import com.example.proyectofinal.databinding.ViewholderBinding;
@@ -19,15 +21,17 @@ import java.util.List;
 import java.util.Locale;
 
 public class EventoAdapter {
-    public Adapter la;
-    ViewModelEvento viewModel;
-    SharedPreferencesHelper helper;
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private Adapter la;
+    private ViewModelEvento viewModel;
+    private SharedPreferencesHelper helper;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private Activity activity;
 
     public Adapter recuperarAdapter(LayoutInflater lt, NavController navController, int id, View view, ViewModelEvento viewModel){
         this.la = new Adapter(lt, navController, id, view);
         this.viewModel = viewModel;
         helper = new SharedPreferencesHelper(lt.getContext());
+        this.activity = activity;
 
         return la;
     }
@@ -37,9 +41,6 @@ public class EventoAdapter {
         notifyDataSetChanged();
     }
 
-    public Evento obtenerTarea(int posicion){
-        return la.obtenerTarea(posicion);
-    }
 
     public void notifyDataSetChanged(){
         la.notifyDataSetChanged();
@@ -76,12 +77,12 @@ public class EventoAdapter {
 
         @Override
         public void onBindViewHolder(@NonNull EventoViewHolder holder, int position) {
-            Evento evento = lEventos.get(position);
+                Evento evento = lEventos.get(position);
 
-            holder.binding.viewNombre.setText(evento.getNombre());
-            holder.binding.fechaViewHolder.setText(formatearFecha(evento.getFechaInicio()));
+                holder.binding.viewNombre.setText(evento.getNombre());
+                holder.binding.fechaViewHolder.setText(formatearFecha(evento.getFechaInicio()));
 
-            holder.itemView.setOnClickListener(v -> navegarPantallaDetalle(evento));
+                holder.itemView.setOnClickListener(v -> navegarPantallaDetalle(evento));
         }
 
         @Override
@@ -99,10 +100,6 @@ public class EventoAdapter {
 
         public void establecerLista(List<Evento> lEventos){
             this.lEventos = lEventos;
-        }
-
-        public Evento obtenerTarea(int posicion){
-            return lEventos.get(posicion);
         }
 
         private String formatearFecha(long timestamp) {
