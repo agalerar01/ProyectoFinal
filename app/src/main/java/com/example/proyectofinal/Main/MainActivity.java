@@ -125,34 +125,11 @@ public class MainActivity extends AppCompatActivity {
             e.setText(mAuth.getCurrentUser().getDisplayName());
         }else {
             if (helper.devolverPrimeraVez()) {
-                popUp(e);
                 helper.guardarPrimeraVez(false);
             } else {
                 e.setText(helper.devolverNomUsu());
             }
         }
-    }
-
-    private void popUp(TextView e){
-        popupView = getLayoutInflater().inflate(R.layout.popup, null);
-
-        popupWindow = new PopupWindow(popupView,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                true);
-
-        popupWindow.setOutsideTouchable(false);
-        popupWindow.setFocusable(true);
-
-        Button btn_guardar = popupView.findViewById(R.id.guardar);
-        btn_guardar.setOnClickListener(v -> {
-            TextInputEditText t = popupView.findViewById(R.id.nomUsu);
-            helper.guardarNomUsu(t.getText().toString());
-            e.setText(t.getText().toString());
-            popupWindow.dismiss();
-        });
-
-        binding.getRoot().post(() -> popupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0));
     }
 
     private void logoutUser() {

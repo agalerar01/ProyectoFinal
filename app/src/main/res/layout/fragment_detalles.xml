@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:visibility="gone"
-                android:text="Ciudad:" />
+                android:text="@string/city" />
 
             <TextView
                 android:id="@+id/ciudad"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Calle:" />
+                android:text="@string/street" />
 
             <TextView
                 android:id="@+id/calle"
@@ -111,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Fecha"
+                android:text="@string/date"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -153,6 +153,14 @@
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/apuntarse"
+                android:visibility="gone"
+                android:layout_width="152dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center"
+                android:text="@string/join" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

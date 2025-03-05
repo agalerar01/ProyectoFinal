@@ -1,7 +1,35 @@
 <resources>
     <string name="app_name">ProyectoFinal</string>
-    <string name="default_web_client_id">721644862610-1mderoi4sep9hbdip7avdbqsgm42h1dg.apps.googleusercontent.com</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="modo_oscuro">Para aplicar los cambios debe reiniciar la aplicacion</string>
+    <string name="theme">Theme of application</string>
+    <string name="nightmode">Turn on night mode</string>
+    <string name="language">Language of the application</string>
+    <string name="eventadviser">Event Adviser</string>
+    <string name="adviser">Turn on adviser</string>
+    <string name="days">Days before the advise</string>
+    <string name="restart">Reset to default settings</string>
+    <string name="savechanges">Save changes</string>
+    <string name="name">Name</string>
+    <string name="date">Date</string>
+    <string name="city">City</string>
+    <string name="search">Search</string>
+    <string name="street">Street</string>
+    <string name="description">Description</string>
+    <string name="datestart">Date start</string>
+    <string name="datend">Date end</string>
+    <string name="save">Save</string>
+    <string name="setphoto">Set photos</string>
+    <string name="join">Join</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="singin">Sing in</string>
+    <string name="singup">Sing up</string>
+    <string name="noevents">No event has been created yet. Why dont you try creating one?</string>
+    <string name="repeatpassword">Repeat password</string>
+    <string name="emailjoin">Show my email when join a event</string>
+    <string name="emailcomments">Show my email in the comments</string>
+    <string name="profilepicture">Profile picture</string>
+    <string name="showcomments">Activate Comments</string>
+    <string name="privacity">Privacity</string>
+    <string name="changephoto">Change photo</string>
+    <string name="appearance">Appearance</string>
 </resources>

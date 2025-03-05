@@ -23,7 +23,7 @@
             android:id="@+id/busqueda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Busqueda" />
+            android:hint="@string/search" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,7 +38,7 @@
         android:id="@+id/nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre"
+        android:text="@string/name"
         android:checked="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,7 @@
         android:id="@+id/fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fecha"
+        android:text="@string/date"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -63,7 +63,7 @@
         android:id="@+id/ciudad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ciudad"
+        android:text="@string/city"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.922"

@@ -14,13 +14,13 @@ public class Evento {
     private Long fechaFinal;
     private String creador;
     private List<Comentario> lComentarios;
-    private List<String> lApuntados;
+    private List<Apuntado> lApuntados;
     private List<String> lUrls;
 
     public Evento() {
     }
 
-    public Evento(String id, String nombre, String ciudad, String calle, String descripcion, Long fechaInicio, Long fechaFinal, String creador, List<Comentario> lComentarios, List<String> lApuntados, List<String> lUrls) {
+    public Evento(String id, String nombre, String ciudad, String calle, String descripcion, Long fechaInicio, Long fechaFinal, String creador, List<Comentario> lComentarios, List<Apuntado> lApuntados, List<String> lUrls) {
         this.id = id;
         this.nombre = nombre;
         this.ciudad = ciudad;
@@ -90,11 +90,11 @@ public class Evento {
         this.lComentarios = lComentarios;
     }
 
-    public List<String> getlApuntados() {
+    public List<Apuntado> getlApuntados() {
         return lApuntados;
     }
 
-    public void setlApuntados(List<String> lApuntados) {
+    public void setlApuntados(List<Apuntado> lApuntados) {
         this.lApuntados = lApuntados;
     }
 
@@ -124,5 +124,13 @@ public class Evento {
 
     public void aniadirFoto(String Url) {
         lUrls.add(Url);
+    }
+
+    public void aniadirParticipante(Apuntado apuntado) {
+        lApuntados.add(apuntado);
+    }
+
+    public void aniadirFoto(Comentario comentario) {
+        lComentarios.add(comentario);
     }
 }

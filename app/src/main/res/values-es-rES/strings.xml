@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ProyectoFinal</string>
+    <string name="theme">Tema de la aplicacion</string>
+    <string name="nightmode">Activar modo oscuro</string>
+    <string name="language">Idioma de la aplicacion</string>
+    <string name="eventadviser">Recordatorio de eventos</string>
+    <string name="adviser">Activar recordatorio</string>
+    <string name="days">Dias de antelacion</string>
+    <string name="restart">Restablecer valores predeterminados</string>
+    <string name="savechanges">Guardar Cambios</string>
+    <string name="name">Nombre</string>
+    <string name="date">Fecha</string>
+    <string name="city">Ciudad</string>
+    <string name="search">Buscar</string>
+    <string name="street">Calle</string>
+    <string name="description">Descripcion</string>
+    <string name="datestart">Fecha inicio</string>
+    <string name="datend">Fecha final</string>
+    <string name="save">Guardar</string>
+    <string name="setphoto">Seleccionar Foto</string>
+    <string name="join">Apuntate</string>
+    <string name="email">Correo</string>
+    <string name="password">Contraseña</string>
+    <string name="singin">Registrate</string>
+    <string name="singup">Inicia Sesion</string>
+    <string name="noevents">Aun no se ha creado ningun event. Porque no pruebas a crealo tu</string>
+    <string name="repeatpassword">Repetir contraseña</string>
+    <string name="emailjoin">Mostrar mi correo al inscribirme en un evento</string>
+    <string name="emailcomments">Mostrar mi correo en los comentarios</string>
+    <string name="profilepicture">Foto perfil</string>
+    <string name="showcomments">Activar comentarios</string>
+    <string name="privacity">Privacidad</string>
+    <string name="changephoto">Cambiar foto</string>
+    <string name="appearance">Apariencia</string>
+</resources>

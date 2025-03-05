@@ -34,7 +34,7 @@
             android:id="@+id/correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo"
+            android:hint="@string/email"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -51,7 +51,7 @@
             android:id="@+id/contrasena"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
+            android:hint="@string/password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,7 +68,7 @@
             android:id="@+id/repetirContrasena"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Repetir Contraseña"
+            android:hint="@string/repeatpassword"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="#2196F3"
-        android:text="Registrarse"
+        android:text="@string/singup"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="#E3F2FD"
-        android:text="Volver al Login"
+        android:text="@string/singin"
         android:textColor="#2196F3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

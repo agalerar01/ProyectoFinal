@@ -10,13 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
 import com.example.proyectofinal.databinding.FragmentPrivacidadBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 public class PrivacidadFragment extends Fragment {
 
     FragmentPrivacidadBinding binding;
     SharedPreferencesHelper helper;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +55,16 @@ public class PrivacidadFragment extends Fragment {
             binding.switchActivarComentarios.setChecked(false);
         }
 
+        if(isGoogleLogin()){
+            Glide.with(this)
+                    .load(mAuth.getCurrentUser().getPhotoUrl())
+                    .override(240,240)
+                    .circleCrop()
+                    .into(binding.fotoPerfilDrawer);
+        }else{
+
+        }
+
         binding.guardarCambiosPrivacidad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,5 +73,15 @@ public class PrivacidadFragment extends Fragment {
                 helper.guardarMostrarComentarios(binding.switchActivarComentarios.isChecked());
             }
         });
+    }
+
+    private boolean isGoogleLogin() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        for (UserInfo profile : user.getProviderData()) {
+            if (profile.getProviderId().equals("google.com")) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -29,7 +29,7 @@
                     android:id="@+id/nombre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nombre" />
+                    android:hint="@string/name" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -41,7 +41,7 @@
                     android:id="@+id/ciudad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ciudad" />
+                    android:hint="@string/city" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -53,7 +53,7 @@
                     android:id="@+id/calle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Calle" />
+                    android:hint="@string/street" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -65,7 +65,7 @@
                     android:id="@+id/descripcion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Descripción"
+                    android:hint="@string/description"
                     android:lines="3"
                     android:inputType="textMultiLine"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -92,7 +92,7 @@
                 android:id="@+id/imagen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Seleccionar Foto"
+                android:text="@string/setphoto"
                 android:layout_marginBottom="8dp"
                 android:layout_gravity="center"/>
 
@@ -122,7 +122,7 @@
                     android:id="@+id/fechaInicio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Fecha Inicio"
+                    android:hint="@string/datestart"
                     android:focusable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,7 +135,7 @@
                     android:id="@+id/fechaFinal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Fecha Final"
+                    android:hint="@string/datend"
                     android:focusable="false" />
             </com.google.android.material.textfield.TextInputLayout>
 

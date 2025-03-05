@@ -24,7 +24,7 @@
                 android:id="@+id/nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre" />
+                android:hint="@string/name" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -39,7 +39,7 @@
                 android:id="@+id/ciudad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ciudad" />
+                android:hint="@string/city" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,7 +54,7 @@
                 android:id="@+id/calle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Calle" />
+                android:hint="@string/street" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Seleccionar Foto" />
+            android:text="@string/setphoto" />
 
         <Button
             android:id="@+id/eliminar"
@@ -90,7 +90,7 @@
                 android:id="@+id/descripcion"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:hint="Descipcion" />
+                android:hint="@string/description" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
-                android:hint="Fecha Inicio" />
+                android:hint="@string/datestart" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,7 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
-                android:hint="Fecha Final" />
+                android:hint="@string/datend" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,7 +131,7 @@
             android:layout_width="332dp"
             android:layout_height="38dp"
             android:layout_gravity="center"
-            android:text="Guardar" />
+            android:text="@string/save" />
 
     </LinearLayout>
 </ScrollView>

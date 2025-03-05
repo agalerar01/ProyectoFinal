@@ -14,12 +14,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.proyectofinal.Main.Controladores.FotoAdapter;
+import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
+import com.example.proyectofinal.Main.Model.Apuntado;
 import com.example.proyectofinal.Main.Model.Evento;
+import com.example.proyectofinal.Main.ViewModel.EventoRepository;
 import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
 import com.example.proyectofinal.R;
 import com.example.proyectofinal.databinding.FragmentDetallesBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,12 +37,18 @@ import java.util.concurrent.Executors;
 public class DetallesFragment extends Fragment {
 
     FragmentDetallesBinding binding;
+    Evento eventoElegido;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    EventoRepository rep = new EventoRepository();
+    SharedPreferencesHelper helper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentDetallesBinding.inflate(getLayoutInflater(), container, false);
+
+        helper = new SharedPreferencesHelper(getLayoutInflater().getContext());
 
         return binding.getRoot();
     }
@@ -63,12 +76,14 @@ public class DetallesFragment extends Fragment {
                 binding.descripcion.setVisibility(View.VISIBLE);
                 binding.fechaLimite.setVisibility(View.VISIBLE);
                 binding.recyclerFotos.setVisibility(View.VISIBLE);
+                binding.apuntarse.setVisibility(View.VISIBLE);
             });
         });
 
         viewModelEvento.eventoElegido.observe(getViewLifecycleOwner(), new Observer<Evento>() {
             @Override
             public void onChanged(Evento evento) {
+                eventoElegido = evento;
                 binding.nombre.setText(evento.getNombre());
                 binding.ciudad.setText(evento.getCiudad());
                 binding.calle.setText(evento.getCalle());
@@ -85,11 +100,44 @@ public class DetallesFragment extends Fragment {
                 ad.notifyDataSetChanged();
             }
         });
+
+        binding.apuntarse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Apuntado apuntado = new Apuntado();
+
+                if(helper.devolverMostrarComentarios()) {
+                    apuntado.setCorreo(mAuth.getCurrentUser().getEmail());
+                }
+
+                if(isGoogleLogin()){
+                    apuntado.setNombre(mAuth.getCurrentUser().getDisplayName());
+                }else{
+
+                }
+
+                eventoElegido.aniadirParticipante(apuntado);
+
+                rep.actualizarEvento(eventoElegido);
+
+                Toast.makeText(requireContext(),"Te has añadido al evento. Esperamos verte alli", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private String formatearFecha(long timestamp) {
         Date date = new Date(timestamp);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         return sdf.format(date);
+    }
+
+    private boolean isGoogleLogin() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        for (UserInfo profile : user.getProviderData()) {
+            if (profile.getProviderId().equals("google.com")) {
+                return true;
+            }
+        }
+        return false;
     }
 }

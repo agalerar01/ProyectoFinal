@@ -32,7 +32,7 @@
             android:id="@+id/correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Correo"
+            android:hint="@string/email"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -42,7 +42,7 @@
         android:layout_height="51dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#2196F3"
-        android:text="Iniciar Sesión"
+        android:text="@string/singin"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +63,7 @@
             android:id="@+id/contrasenaS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
+            android:hint="@string/password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +72,7 @@
         android:layout_width="314dp"
         android:layout_height="51dp"
         android:backgroundTint="#E3F2FD"
-        android:text="Registrarse"
+        android:text="@string/singup"
         android:textColor="#2196F3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

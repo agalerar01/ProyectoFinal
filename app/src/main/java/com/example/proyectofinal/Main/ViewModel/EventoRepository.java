@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.SetOptions;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -117,6 +118,13 @@ public class EventoRepository {
                 });
 
         return eventosLiveData;
+    }
+
+    public void actualizarEvento(Evento evento){
+
+        db.collection("Eventos")
+                .document(evento.getId())
+                .set(evento, SetOptions.merge());
     }
 
     public LiveData<List<Evento>> recuperarEventosPorCiudad(String nom){
