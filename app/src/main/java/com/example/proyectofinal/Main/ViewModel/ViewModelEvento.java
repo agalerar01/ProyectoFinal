@@ -52,20 +52,24 @@ public class ViewModelEvento extends AndroidViewModel {
         try {
             // Convertimos el Uri en un File para enviarlo a Supabase
             // Más abajo tienes el código de esa clase estática
-            File imageFile = ImageUtils.getFileFromUri(getApplication().getApplicationContext(), imageFileUri);
+            if(imageFileUri != null) {
+                File imageFile = ImageUtils.getFileFromUri(getApplication().getApplicationContext(), imageFileUri);
 
-            // Usamos switchMap para esperar a que la imagen se suba antes de guardar el anuncio
-            return Transformations.switchMap(rep.uploadImage(imageFile), fileUrl -> {
-                if (fileUrl != null) {
-                    // Creamos el anuncio solo si tenemos la URL de la imagen
-                    evento.aniadirFoto(fileUrl);
-                    return rep.anadirEvento(evento);
-                } else {
-                    // Si la subida falla, devolvemos false
-                    resultadoLiveData.postValue(false);
-                    return resultadoLiveData;
-                }
-            });
+                // Usamos switchMap para esperar a que la imagen se suba antes de guardar el anuncio
+                return Transformations.switchMap(rep.uploadImage(imageFile), fileUrl -> {
+                    if (fileUrl != null) {
+                        // Creamos el anuncio solo si tenemos la URL de la imagen
+                        evento.aniadirFoto(fileUrl);
+                        return rep.anadirEvento(evento);
+                    } else {
+                        // Si la subida falla, devolvemos false
+                        resultadoLiveData.postValue(false);
+                        return resultadoLiveData;
+                    }
+                });
+            }else{
+                return rep.anadirEvento(evento);
+            }
 
         } catch (IOException e) {
             // Capturamos posibles errores en la conversión del archivo

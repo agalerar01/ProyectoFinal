@@ -56,10 +56,6 @@
         android:title=" "
         android:enabled="false" />
 
-    <item
-        android:id="@+id/separador9"
-        android:title=" "
-        android:enabled="false" />
 
     <item
         android:id="@+id/ajustesFragment"
