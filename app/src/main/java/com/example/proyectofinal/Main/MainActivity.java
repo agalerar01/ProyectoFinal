@@ -4,19 +4,13 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,19 +19,19 @@ import androidx.navigation.ui.NavigationUI;
 import com.bumptech.glide.Glide;
 import com.example.proyectofinal.Login.ActivityLogin;
 import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
-import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
 import com.example.proyectofinal.R;
 import com.example.proyectofinal.databinding.ActivityMainBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         configurarClienteGoogleSignIn();
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nuevaNoticiaFragment, R.id.busquedaFragment, R.id.misEventosFragment
@@ -94,7 +90,16 @@ public class MainActivity extends AppCompatActivity {
 
         cambiarIdioma();
 
-        getSupportActionBar().setTitle("Proximo Evento");
+        getSupportActionBar().setTitle(R.string.newevent);
+
+        executor.execute(() -> {
+            try {
+                Thread.sleep(5000);
+                helper.guardarIdiomaCambiado(true);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
 
     private void cambiarIdioma() {

@@ -38,4 +38,10 @@
         <item>French</item>
     </string-array>
     <string name="restartapp">You need to restart the app to apply the changes</string>
+    <string name="newevent">Newest Event</string>
+    <string name="searchtittle">Search</string>
+    <string name="myevents">My Events</string>
+    <string name="settings">Setings</string>
+    <string name="details">Details Of the event</string>
+    <string name="eventcreation">Event creation</string>
 </resources>

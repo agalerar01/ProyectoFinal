@@ -8,12 +8,12 @@
     <fragment
         android:id="@+id/nuevaNoticiaFragment"
         android:name="com.example.proyectofinal.Main.Fragments.NuevaEventoFragment"
-        android:label="Proximo Evento"
+        android:label="@string/newevent"
         tools:layout="@layout/fragment_nueva_evento" />
     <fragment
         android:id="@+id/busquedaFragment"
         android:name="com.example.proyectofinal.Main.Fragments.BusquedaFragment"
-        android:label="Busqueda"
+        android:label="@string/searchtittle"
         tools:layout="@layout/fragment_busqueda" >
         <action
             android:id="@+id/action_busquedaFragment_to_detallesFragment"
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/misEventosFragment"
         android:name="com.example.proyectofinal.Main.Fragments.MisEventosFragment"
-        android:label="Mis Eventos"
+        android:label="@string/myevents"
         tools:layout="@layout/fragment_mis_eventos" >
         <action
             android:id="@+id/action_misEventosFragment_to_detallesFragment"
@@ -34,16 +34,16 @@
     <fragment
         android:id="@+id/ajustesFragment"
         android:name="com.example.proyectofinal.Main.Fragments.AjustesFragment"
-        android:label="Ajustes"
+        android:label="@string/settings"
         tools:layout="@layout/fragment_ajustes" />
     <fragment
         android:id="@+id/detallesFragment"
         android:name="com.example.proyectofinal.Main.Fragments.DetallesFragment"
-        android:label="Detalles del Evento"
+        android:label="@string/details"
         tools:layout="@layout/fragment_detalles" />
     <fragment
         android:id="@+id/crearEventoFragment"
         android:name="com.example.proyectofinal.Main.Fragments.CrearEventoFragment"
-        android:label="Creacion de Evento"
+        android:label="@string/eventcreation"
         tools:layout="@layout/fragment_crear_evento" />
 </navigation>

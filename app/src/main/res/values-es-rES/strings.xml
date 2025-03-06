@@ -34,4 +34,10 @@
     <string name="changephoto">Cambiar foto</string>
     <string name="appearance">Apariencia</string>
     <string name="restartapp">Necesitas reiniciar la aplicacion para aplicar los cambios</string>
+    <string name="newevent">Proximo Evento</string>
+    <string name="searchtittle">Busqueda</string>
+    <string name="myevents">Mis Eventos</string>
+    <string name="settings">Ajustes</string>
+    <string name="details">Detalles del evento</string>
+    <string name="eventcreation">Creacion de evento</string>
 </resources>

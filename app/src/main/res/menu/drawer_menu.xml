@@ -4,17 +4,17 @@
     <item
         android:id="@+id/nuevaNoticiaFragment"
         android:icon="@drawable/senal"
-        android:title="Próximo Evento" />
+        android:title="@string/newevent" />
 
     <item
         android:id="@+id/busquedaFragment"
         android:icon="@drawable/baseline_search_24"
-        android:title="Búsqueda" />
+        android:title="@string/searchtittle" />
 
     <item
         android:id="@+id/misEventosFragment"
         android:icon="@drawable/documento"
-        android:title="Mis Eventos" />
+        android:title="@string/myevents" />
 
     <item
         android:id="@+id/separador"
@@ -60,6 +60,6 @@
     <item
         android:id="@+id/ajustesFragment"
         android:icon="@drawable/configuraciones"
-        android:title="Ajustes" />
+        android:title="@string/settings" />
 
 </menu>

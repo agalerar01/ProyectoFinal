@@ -4,10 +4,10 @@
     <item
         android:id="@+id/aparienciaFragment"
         android:icon="@drawable/common_google_signin_btn_text_dark"
-        android:title="Apariencia"/>
+        android:title="@string/appearance"/>
 
     <item
         android:id="@+id/privacidadFragment"
         android:icon="@drawable/common_google_signin_btn_text_dark"
-        android:title="Privacidad"/>
+        android:title="@string/privacity"/>
 </menu>
