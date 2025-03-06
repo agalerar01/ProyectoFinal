@@ -16,6 +16,7 @@ public class SharedPreferencesHelper {
     private static final String PREFS_MOSTRAR_COMENTARIOS = "mostrarComentarios";
     private static final String PREFS_PRIMERA_VEZ = "primeraVez";
     private static final String PREFS_NOM_USU = "nomUsu";
+    private static final String PREFS_IDIOMA = "idioma";
 
     public SharedPreferencesHelper(Context context) {
         sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -83,5 +84,13 @@ public class SharedPreferencesHelper {
 
     public String devolverNomUsu(){
         return sharedPreferences.getString(PREFS_NOM_USU, "Invitado");
+    }
+
+    public void guardarIdioma(String nom){
+        sharedPreferences.edit().putString(PREFS_IDIOMA, nom).apply();
+    }
+
+    public String devolverIdioma(){
+        return sharedPreferences.getString(PREFS_IDIOMA, "English");
     }
 }

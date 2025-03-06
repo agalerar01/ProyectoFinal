@@ -53,12 +53,21 @@ public class NuevaEventoFragment extends Fragment {
 
         executor.execute(() ->  {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             if(getActivity() != null) {
                 getActivity().runOnUiThread(() -> {
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.textobienvenida.setVisibility(View.GONE);
+                    binding.nombreEvento.setVisibility(View.VISIBLE);
+                    binding.city.setVisibility(View.VISIBLE);
+                    binding.calle.setVisibility(View.VISIBLE);
+                    binding.descripcion.setVisibility(View.VISIBLE);
+                    binding.fechas.setVisibility(View.VISIBLE);
+                    binding.recyclerProximoEvento.setVisibility(View.VISIBLE);
+
                     if(binding.nombreEvento.getText().toString().equalsIgnoreCase("")){
                         binding.progressBar.setVisibility(View.GONE);
                         binding.textobienvenida.setVisibility(View.VISIBLE);
@@ -68,15 +77,6 @@ public class NuevaEventoFragment extends Fragment {
                         binding.descripcion.setVisibility(View.GONE);
                         binding.fechas.setVisibility(View.GONE);
                         binding.recyclerProximoEvento.setVisibility(View.GONE);
-                    }else {
-                        binding.progressBar.setVisibility(View.GONE);
-                        binding.textobienvenida.setVisibility(View.GONE);
-                        binding.nombreEvento.setVisibility(View.VISIBLE);
-                        binding.city.setVisibility(View.VISIBLE);
-                        binding.calle.setVisibility(View.VISIBLE);
-                        binding.descripcion.setVisibility(View.VISIBLE);
-                        binding.fechas.setVisibility(View.VISIBLE);
-                        binding.recyclerProximoEvento.setVisibility(View.VISIBLE);
                     }
                 });
             }

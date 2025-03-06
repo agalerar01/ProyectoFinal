@@ -1,6 +1,8 @@
 package com.example.proyectofinal.Main;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -32,14 +34,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private GoogleSignInClient googleSignInClient;
     SharedPreferencesHelper helper;
-    View popupView;
-    PopupWindow popupWindow;
+    boolean cambioIdioma = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +90,26 @@ public class MainActivity extends AppCompatActivity {
 
         TextView e = navigationView.getHeaderView(0).findViewById(R.id.nombreUsu);
 
-        cambiarNomUsu(e);
+        cambiarIdioma();
 
         getSupportActionBar().setTitle("Proximo Evento");
+    }
+
+    private void cambiarIdioma() {
+        if(cambioIdioma) {
+            switch (helper.devolverIdioma()) {
+                case "English":
+                    changeLanguage("en");
+                    break;
+                case "Spanish":
+                    changeLanguage("es");
+                    break;
+                case "French":
+                    changeLanguage("fr");
+                    break;
+            }
+        }
+        cambioIdioma = false;
     }
 
     private void cambiarTema(NavigationView navigationView){
@@ -117,18 +137,6 @@ public class MainActivity extends AppCompatActivity {
             TextView e = navigationView.getHeaderView(0).findViewById(R.id.correo);
 
             e.setText(mAuth.getCurrentUser().getEmail());
-        }
-    }
-
-    private void cambiarNomUsu(TextView e){
-        if(isGoogleLogin()) {
-            e.setText(mAuth.getCurrentUser().getDisplayName());
-        }else {
-            if (helper.devolverPrimeraVez()) {
-                helper.guardarPrimeraVez(false);
-            } else {
-                e.setText(helper.devolverNomUsu());
-            }
         }
     }
 
@@ -176,6 +184,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    private void changeLanguage(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = new Configuration(resources.getConfiguration());
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+
+        recreate();
     }
 
     @Override

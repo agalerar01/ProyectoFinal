@@ -33,5 +33,5 @@
     <string name="privacity">Confidentialité</string>
     <string name="changephoto">Changer la photo</string>
     <string name="appearance">Apparence</string>
-
+    <string name="restartapp">Vous devez redémarrer l\'application pour appliquer les changements</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.proyectofinal.Main.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,9 +10,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
+import com.example.proyectofinal.Main.MainActivity;
 import com.example.proyectofinal.R;
 import com.example.proyectofinal.databinding.FragmentAparienciaBinding;
 
@@ -33,6 +37,10 @@ public class AparienciaFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.languagues));
+
+        binding.spinnerIdioma.setAdapter(adapter);
 
         if(helper.devolverTemaOscuro()){
             binding.switchModoOscuro.setChecked(true);
@@ -81,8 +89,9 @@ public class AparienciaFragment extends Fragment {
                 helper.guardarTemaOscuro(binding.switchModoOscuro.isChecked());
                 helper.guardarRecordatorio(binding.switchRecordador.isChecked());
                 helper.guardarDiasRecordatorio(Integer.parseInt(String.valueOf(binding.diasRecordatorio.getText())));
+                helper.guardarIdioma(String.valueOf(binding.spinnerIdioma.getSelectedItemPosition()));
 
-                Toast.makeText(getActivity(), R.string.modo_oscuro, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.restartapp, Toast.LENGTH_LONG).show();
             }
         });
     }

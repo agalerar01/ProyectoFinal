@@ -32,4 +32,10 @@
     <string name="privacity">Privacity</string>
     <string name="changephoto">Change photo</string>
     <string name="appearance">Appearance</string>
+    <string-array name="languagues">
+        <item>English</item>
+        <item>Spanish</item>
+        <item>French</item>
+    </string-array>
+    <string name="restartapp">You need to restart the app to apply the changes</string>
 </resources>
