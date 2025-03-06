@@ -21,6 +21,7 @@ public class ViewModelEvento extends AndroidViewModel {
 
     public MutableLiveData<Evento> eventoElegido = new MutableLiveData<>();
     EventoRepository rep = new EventoRepository();
+    public boolean idiomaNoCambiado= true;
 
     public ViewModelEvento(@NonNull Application application){
         super(application);

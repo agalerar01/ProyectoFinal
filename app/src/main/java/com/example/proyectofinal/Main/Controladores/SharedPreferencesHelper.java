@@ -17,6 +17,8 @@ public class SharedPreferencesHelper {
     private static final String PREFS_PRIMERA_VEZ = "primeraVez";
     private static final String PREFS_NOM_USU = "nomUsu";
     private static final String PREFS_IDIOMA = "idioma";
+    private static final String PREFS_IDIOMA_CAMBIADO = "idiomaCambiado";
+    private static final String PREFS_NUM_IDIOMA = "numIdioma";
 
     public SharedPreferencesHelper(Context context) {
         sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -92,5 +94,21 @@ public class SharedPreferencesHelper {
 
     public String devolverIdioma(){
         return sharedPreferences.getString(PREFS_IDIOMA, "English");
+    }
+
+    public boolean devolverIdiomaCambiado(){
+        return sharedPreferences.getBoolean(PREFS_IDIOMA_CAMBIADO, true);
+    }
+
+    public void guardarIdiomaCambiado(boolean b){
+        sharedPreferences.edit().putBoolean(PREFS_IDIOMA_CAMBIADO, b).apply();
+    }
+
+    public void guardarNumIdioma(int b){
+        sharedPreferences.edit().putInt(PREFS_NUM_IDIOMA, b).apply();
+    }
+
+    public int devolverNumIdioma(){
+        return sharedPreferences.getInt(PREFS_NUM_IDIOMA, 1);
     }
 }

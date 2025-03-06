@@ -24,7 +24,7 @@
     <string name="password">Contraseña</string>
     <string name="singin">Registrate</string>
     <string name="singup">Inicia Sesion</string>
-    <string name="noevents">Aun no se ha creado ningun event. Porque no pruebas a crealo tu</string>
+    <string name="noevents">Aun no se ha creado ningun evento. Porque no pruebas a crealo tu</string>
     <string name="repeatpassword">Repetir contraseña</string>
     <string name="emailjoin">Mostrar mi correo al inscribirme en un evento</string>
     <string name="emailcomments">Mostrar mi correo en los comentarios</string>

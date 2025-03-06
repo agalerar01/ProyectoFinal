@@ -30,15 +30,5 @@ public class ActivityLogin extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser user = mAuth.getCurrentUser();
-        mAuth.signOut();
-        if (user != null) {
-            iniciarMainActivity();
-        }
-    }
-
-    public void iniciarMainActivity() {
-        Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

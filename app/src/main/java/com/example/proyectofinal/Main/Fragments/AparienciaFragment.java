@@ -42,6 +42,8 @@ public class AparienciaFragment extends Fragment {
 
         binding.spinnerIdioma.setAdapter(adapter);
 
+        binding.spinnerIdioma.setSelection(helper.devolverNumIdioma());
+
         if(helper.devolverTemaOscuro()){
             binding.switchModoOscuro.setChecked(true);
         }else{
@@ -89,7 +91,9 @@ public class AparienciaFragment extends Fragment {
                 helper.guardarTemaOscuro(binding.switchModoOscuro.isChecked());
                 helper.guardarRecordatorio(binding.switchRecordador.isChecked());
                 helper.guardarDiasRecordatorio(Integer.parseInt(String.valueOf(binding.diasRecordatorio.getText())));
-                helper.guardarIdioma(String.valueOf(binding.spinnerIdioma.getSelectedItemPosition()));
+                helper.guardarIdioma(binding.spinnerIdioma.getSelectedItem().toString());
+                helper.guardarNumIdioma(binding.spinnerIdioma.getSelectedItemPosition());
+                helper.guardarIdiomaCambiado(true);
 
                 Toast.makeText(getActivity(), R.string.restartapp, Toast.LENGTH_LONG).show();
             }

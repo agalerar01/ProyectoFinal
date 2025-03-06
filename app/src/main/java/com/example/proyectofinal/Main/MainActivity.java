@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,6 +25,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.bumptech.glide.Glide;
 import com.example.proyectofinal.Login.ActivityLogin;
 import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
+import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
 import com.example.proyectofinal.R;
 import com.example.proyectofinal.databinding.ActivityMainBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -42,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private GoogleSignInClient googleSignInClient;
     SharedPreferencesHelper helper;
-    boolean cambioIdioma = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void cambiarIdioma() {
-        if(cambioIdioma) {
+        if(helper.devolverIdiomaCambiado()) {
             switch (helper.devolverIdioma()) {
                 case "English":
                     changeLanguage("en");
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
-        cambioIdioma = false;
+        helper.guardarIdiomaCambiado(false);
     }
 
     private void cambiarTema(NavigationView navigationView){
