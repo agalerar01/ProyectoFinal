@@ -35,7 +35,7 @@ public class EventoRepository {
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    private SupabaseHelper helperSupabase = ConexionSupabase.getClient().create(SupabaseHelper.class);;
+    private SupabaseHelper helperSupabase = ConexionSupabase.getClient().create(SupabaseHelper.class);
 
     public LiveData<Boolean> anadirEvento(Evento evento){
         MutableLiveData<Boolean> bolean = new MutableLiveData<>();
@@ -184,5 +184,42 @@ public class EventoRepository {
 
         // Devolvemos el LiveData con la URL de nuestra imagen
         return liveDataUrl;
+    }
+
+    public String uploadImageUsu(File imageFile) {
+        List<String> Url = new ArrayList<>();
+
+        // Crear el cuerpo de la petición para enviar a Supabase (en él se envía el fichero)
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
+
+        // Llamada a la API de Supabase
+        // Param 1: Tu API KEY (Autenticación)
+        // Param 2: nombre de tu bucket
+        // Param 3: nombre con el que se creará el fichero en Supabase
+        // Param 4: cuerpo de la petición (imagen)
+        Call<Void> call = helperSupabase.uploadImage("Bearer " + Constantes.API_KEY, "foto_perfil", imageFile.getName(), body);
+
+        // Enviamos la petición en segundo plano
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // Si todo va bien, recuperamos la URL pública de la imagen en Supabase
+                    // Esta URL será la que guardemos en nuestra base de datos
+                    String fileUrl = response.raw().request().url().toString();
+                    // Almacenamos el valor en el LiveData
+                    Url.add(fileUrl);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Si no se ha podido completar la petición, devolvemos null
+            }
+        });
+
+        // Devolvemos el LiveData con la URL de nuestra imagen
+        return Url.get(0);
     }
 }

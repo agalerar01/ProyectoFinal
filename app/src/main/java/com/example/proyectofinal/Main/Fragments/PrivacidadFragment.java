@@ -1,27 +1,48 @@
 package com.example.proyectofinal.Main.Fragments;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
+import com.example.proyectofinal.Main.ImageUtils;
+import com.example.proyectofinal.Main.Model.Usuario;
+import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
+import com.example.proyectofinal.R;
 import com.example.proyectofinal.databinding.FragmentPrivacidadBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+
+import java.io.IOException;
 
 public class PrivacidadFragment extends Fragment {
 
     FragmentPrivacidadBinding binding;
     SharedPreferencesHelper helper;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
+    private Uri selectedImageUri;
+    private byte[] fotoBlob;
+    private ViewModelEvento viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,6 +50,8 @@ public class PrivacidadFragment extends Fragment {
 
         binding = FragmentPrivacidadBinding.inflate(getLayoutInflater(), container, false);
         helper = new SharedPreferencesHelper(getContext());
+
+        viewModel = new ViewModelProvider(requireActivity()).get(ViewModelEvento.class);
 
         return binding.getRoot();
     }
@@ -62,8 +85,50 @@ public class PrivacidadFragment extends Fragment {
                     .circleCrop()
                     .into(binding.fotoPerfilDrawer);
         }else{
-
+            Glide.with(this)
+                    .load(R.drawable.no_foto)
+                    .override(240,240)
+                    .circleCrop()
+                    .into(binding.fotoPerfilDrawer);
         }
+
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) { //  Se ejecuta automáticamente cuando el usuario selecciona una imagen o cancela.
+                        // Si se ha seleccionado una imagen, la recuperamos del parámetro del método
+                        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                            selectedImageUri = result.getData().getData();  // URI de la imagen seleccionada
+                            fotoBlob = ImageUtils.uriToBlob(requireContext().getContentResolver(), selectedImageUri); // Conseguimos el BLOB a partir de la URI
+
+                            viewModel.devolverUsuPorCorreo(mAuth.getCurrentUser().getEmail()).observe(getViewLifecycleOwner(), new Observer<Usuario>() {
+                                @Override
+                                public void onChanged(Usuario usuario) {
+                                    try {
+                                        usuario.setFotoPerfil(viewModel.uploadImageUsu(selectedImageUri));
+
+                                        Glide.with(requireActivity())
+                                                .load(usuario.getFotoPerfil())
+                                                .override(240,240)
+                                                .circleCrop()
+                                                .into(binding.fotoPerfilDrawer);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            });
+                            // Muestra la imagen en el ImageView
+                            binding.fotoPerfilDrawer.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+        );
+
+        binding.cambiarFoto.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            imagePickerLauncher.launch(intent);
+        });
 
         binding.guardarCambiosPrivacidad.setOnClickListener(new View.OnClickListener() {
             @Override

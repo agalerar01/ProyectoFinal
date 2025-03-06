@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,6 +22,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.bumptech.glide.Glide;
 import com.example.proyectofinal.Login.ActivityLogin;
 import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
+import com.example.proyectofinal.Main.Model.Usuario;
+import com.example.proyectofinal.Main.ViewModel.UsuarioRepository;
+import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
 import com.example.proyectofinal.R;
 import com.example.proyectofinal.databinding.ActivityMainBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -29,6 +35,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -39,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private GoogleSignInClient googleSignInClient;
     SharedPreferencesHelper helper;
+    UsuarioRepository repository = new UsuarioRepository();
+    ViewModelEvento viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         configurarClienteGoogleSignIn();
+
+        viewModel = new ViewModelProvider(this).get(ViewModelEvento.class);
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
@@ -86,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
         imagenGoogle(navigationView, i);
 
-        TextView e = navigationView.getHeaderView(0).findViewById(R.id.nombreUsu);
-
         cambiarIdioma();
 
         getSupportActionBar().setTitle(R.string.newevent);
@@ -96,8 +106,47 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Thread.sleep(5000);
                 helper.guardarIdiomaCambiado(true);
+
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
+            }
+        });
+
+        viewModel.devolverUsuPorCorreo(mAuth.getCurrentUser().getEmail()).observe(this, new Observer<Usuario>() {
+            @Override
+            public void onChanged(Usuario usu) {
+                TextView e = navigationView.getHeaderView(0).findViewById(R.id.nombreUsu);
+                ImageView i= navigationView.getHeaderView(0).findViewById(R.id.fotoPerfilDrawer);
+                if(usu == null) {
+                    usu = new Usuario();
+
+                    usu.setCorreo(mAuth.getCurrentUser().getEmail());
+
+                    if (isGoogleLogin()) {
+                        usu.setNombre(mAuth.getCurrentUser().getDisplayName());
+                        e.setText(usu.getNombre());
+                        try {
+                            usu.setFotoPerfil(viewModel.uploadImageUsu(mAuth.getCurrentUser().getPhotoUrl()));
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } else {
+                        usu.setNombre("Invitado");
+                        e.setText(usu.getNombre());
+                    }
+
+                    viewModel.anadirUsu(usu);
+                }else{
+                    e.setText(usu.getNombre());
+
+                    if(usu.getFotoPerfil() != null) {
+                        Glide.with(getApplication())
+                                .load(usu.getFotoPerfil())
+                                .override(240, 240)
+                                .circleCrop()
+                                .into(i);
+                    }
+                }
             }
         });
     }

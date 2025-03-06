@@ -12,6 +12,7 @@ import androidx.lifecycle.Transformations;
 
 import com.example.proyectofinal.Main.ImageUtils;
 import com.example.proyectofinal.Main.Model.Evento;
+import com.example.proyectofinal.Main.Model.Usuario;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class ViewModelEvento extends AndroidViewModel {
 
     public MutableLiveData<Evento> eventoElegido = new MutableLiveData<>();
     EventoRepository rep = new EventoRepository();
+    UsuarioRepository repUsu = new UsuarioRepository();
     public boolean idiomaNoCambiado= true;
 
     public ViewModelEvento(@NonNull Application application){
@@ -78,5 +80,25 @@ public class ViewModelEvento extends AndroidViewModel {
         }
 
         return resultadoLiveData;
+    }
+
+    public LiveData<Boolean> anadirUsu(Usuario usu){
+        MutableLiveData<Boolean> bolean = new MutableLiveData<>();
+
+        repUsu.anadirUsu(usu);
+
+        bolean.postValue(true);
+        return bolean;
+    }
+
+    public LiveData<Usuario> devolverUsuPorCorreo(String correo){
+
+        return repUsu.devolverUsuPorCorreo(correo);
+    }
+
+    public String uploadImageUsu(Uri uri) throws IOException {
+        File fileUri = ImageUtils.getFileFromUri(getApplication().getApplicationContext(), uri);
+
+        return rep.uploadImageUsu(fileUri);
     }
 }
