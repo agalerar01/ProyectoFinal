@@ -126,16 +126,7 @@ public class MainActivity extends AppCompatActivity {
                     if (isGoogleLogin()) {
                         usu.setNombre(mAuth.getCurrentUser().getDisplayName());
                         e.setText(usu.getNombre());
-
-                        viewModel.uploadImageUsu(mAuth.getCurrentUser().getPhotoUrl()).observeForever(new Observer<String>() {
-                            @Override
-                            public void onChanged(String fileUrl) {
-                                if (fileUrl != null) {
-                                    usu.setFotoPerfil(fileUrl);
-                                }
-                                viewModel.anadirUsu(usu);
-                            }
-                        });
+                        viewModel.anadirUsu(usu);
 
                     } else {
                         usu.setNombre("Invitado");

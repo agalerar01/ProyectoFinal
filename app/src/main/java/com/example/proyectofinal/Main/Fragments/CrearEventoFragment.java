@@ -14,9 +14,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -188,7 +190,12 @@ public class CrearEventoFragment extends Fragment {
 
                 e.setlUrls(new ArrayList<>());
 
-                viewModel.aniadirEvento(e, selectedImageUri);
+                viewModel.aniadirEvento(e, selectedImageUri).observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+                        Log.d("Hola", "hOLA");
+                    }
+                });
 
                 binding.nombre.setText("");
                 binding.ciudad.setText("");

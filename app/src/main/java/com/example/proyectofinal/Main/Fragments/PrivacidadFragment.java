@@ -98,6 +98,14 @@ public class PrivacidadFragment extends Fragment {
                     if (usuario == null) return;
 
                     binding.nomusu.setText(usuario.getNombre());
+
+                    if(usuario.getFotoPerfil() != null){
+                        Glide.with(requireActivity())
+                                .load(usuario.getFotoPerfil())
+                                .override(240,240)
+                                .circleCrop()
+                                .into(binding.fotoPerfilDrawer);
+                    }
                 }
             });
         }
