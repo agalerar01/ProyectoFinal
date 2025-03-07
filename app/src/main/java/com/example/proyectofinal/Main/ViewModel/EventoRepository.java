@@ -18,7 +18,10 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 
 import java.io.File;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -71,13 +74,19 @@ public class EventoRepository {
     public LiveData<Evento> recuperarEventosProximo(){
         MutableLiveData<Evento> eventosLiveData = new MutableLiveData<>();
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -1);
+
+
         db.collection("Eventos")
                 .orderBy("fechaInicio", Query.Direction.ASCENDING)
-                .whereGreaterThan("fechaInicio",new Date().getTime())
+                .whereGreaterThan("fechaInicio", calendar.getTime().getTime())
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     if(!querySnapshot.isEmpty()) {
                         eventosLiveData.setValue(querySnapshot.getDocuments().get(0).toObject(Evento.class));
+                    }else{
+                        eventosLiveData.setValue(null);
                     }
                 });
 
