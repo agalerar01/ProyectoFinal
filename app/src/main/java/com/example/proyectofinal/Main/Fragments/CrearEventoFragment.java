@@ -196,6 +196,7 @@ public class CrearEventoFragment extends Fragment {
                 binding.descripcion.setText("");
                 binding.fechaInicio.setText("");
                 binding.fechaFinal.setText("");
+                binding.imagenEvento.setVisibility(View.GONE);
             }
         });
     }

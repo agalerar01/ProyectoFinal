@@ -15,7 +15,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/number_message"
-            android:layout_width="360dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:layout_gravity="center">
@@ -30,7 +30,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/number_message2"
-            android:layout_width="360dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:layout_gravity="center">
@@ -45,7 +45,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/number_message5"
-            android:layout_width="360dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:layout_gravity="center">
@@ -81,7 +81,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/number_message3"
-            android:layout_width="360dp"
+            android:layout_width="300dp"
             android:layout_height="130dp"
             android:layout_margin="10dp"
             android:layout_gravity="center">
@@ -96,7 +96,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/number_message4"
-            android:layout_width="360dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_margin="10dp">
@@ -112,7 +112,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/number_message7"
-            android:layout_width="360dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_margin="10dp">
@@ -128,7 +128,7 @@
 
         <Button
             android:id="@+id/botonGuardar"
-            android:layout_width="332dp"
+            android:layout_width="300dp"
             android:layout_height="38dp"
             android:layout_gravity="center"
             android:text="@string/save" />
