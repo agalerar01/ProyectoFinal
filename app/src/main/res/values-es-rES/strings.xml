@@ -28,7 +28,7 @@
     <string name="repeatpassword">Repetir contraseña</string>
     <string name="emailjoin">Mostrar mi correo al inscribirme en un evento</string>
     <string name="emailcomments">Mostrar mi correo en los comentarios</string>
-    <string name="profilepicture">Foto perfil</string>
+    <string name="profile">Perfil</string>
     <string name="showcomments">Activar comentarios</string>
     <string name="privacity">Privacidad</string>
     <string name="changephoto">Cambiar foto</string>

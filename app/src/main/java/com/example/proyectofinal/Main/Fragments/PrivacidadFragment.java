@@ -20,6 +20,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
@@ -84,12 +85,21 @@ public class PrivacidadFragment extends Fragment {
                     .override(240,240)
                     .circleCrop()
                     .into(binding.fotoPerfilDrawer);
+            binding.nomusu.setText(mAuth.getCurrentUser().getDisplayName());
         }else{
             Glide.with(this)
                     .load(R.drawable.no_foto)
                     .override(240,240)
                     .circleCrop()
                     .into(binding.fotoPerfilDrawer);
+            viewModel.devolverUsuPorCorreo(mAuth.getCurrentUser().getEmail()).observe(getViewLifecycleOwner(), new Observer<Usuario>() {
+                @Override
+                public void onChanged(Usuario usuario) {
+                    if (usuario == null) return;
+
+                    binding.nomusu.setText(usuario.getNombre());
+                }
+            });
         }
 
         imagePickerLauncher = registerForActivityResult(
@@ -135,12 +145,36 @@ public class PrivacidadFragment extends Fragment {
             imagePickerLauncher.launch(intent);
         });
 
+        binding.cambiarnomusu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewModel.devolverUsuPorCorreo(mAuth.getCurrentUser().getEmail()).observe(getViewLifecycleOwner(), new Observer<Usuario>() {
+                    @Override
+                    public void onChanged(Usuario usuario) {
+                        if (usuario == null) return;
+
+                        if(binding.nombre.getText().toString().equalsIgnoreCase("")){
+                            binding.nombre.setError("");
+                            return;
+                        }else{
+                            binding.nomusu.setText(binding.nombre.getText());
+
+                            usuario.setNombre(binding.nombre.getText().toString());
+
+                            viewModel.actualizarUsuario(usuario);
+                        }
+                    }
+                });
+            }
+        });
+
         binding.guardarCambiosPrivacidad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 helper.guardarMostrarCorreoEvento(binding.switchCorreoEvento.isChecked());
                 helper.guardarMostrarCorreoComentarios(binding.switchCorreoComentarios.isChecked());
                 helper.guardarMostrarComentarios(binding.switchActivarComentarios.isChecked());
+                Toast.makeText(getActivity(), R.string.restartapp, Toast.LENGTH_LONG).show();
             }
         });
     }
