@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferencesHelper helper;
     UsuarioRepository repository = new UsuarioRepository();
     ViewModelEvento viewModel;
+    Usuario usu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nuevaNoticiaFragment, R.id.busquedaFragment, R.id.misEventosFragment
         ).setOpenableLayout(binding.drawerLayout).build();
 
-        if(mAuth.getCurrentUser() == null){
+        if (mAuth.getCurrentUser() == null) {
             redirectToLogin();
         }
 
@@ -86,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageView i= navigationView.getHeaderView(0).findViewById(R.id.fotoPerfilDrawer);
+        ImageView i = navigationView.getHeaderView(0).findViewById(R.id.fotoPerfilDrawer);
 
         Glide.with(this)
                 .load(R.drawable.no_foto)
-                .override(240,240)
+                .override(240, 240)
                 .circleCrop()
                 .into(i);
 
@@ -114,32 +115,39 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel.devolverUsuPorCorreo(mAuth.getCurrentUser().getEmail()).observe(this, new Observer<Usuario>() {
             @Override
-            public void onChanged(Usuario usu) {
+            public void onChanged(Usuario usuario) {
                 TextView e = navigationView.getHeaderView(0).findViewById(R.id.nombreUsu);
-                ImageView i= navigationView.getHeaderView(0).findViewById(R.id.fotoPerfilDrawer);
-                if(usu == null) {
-                    usu = new Usuario();
+                ImageView i = navigationView.getHeaderView(0).findViewById(R.id.fotoPerfilDrawer);
 
+                if (usuario == null) {
+                    usu = new Usuario();
                     usu.setCorreo(mAuth.getCurrentUser().getEmail());
 
                     if (isGoogleLogin()) {
                         usu.setNombre(mAuth.getCurrentUser().getDisplayName());
                         e.setText(usu.getNombre());
-                        try {
-                            usu.setFotoPerfil(viewModel.uploadImageUsu(mAuth.getCurrentUser().getPhotoUrl()));
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
+
+                        viewModel.uploadImageUsu(mAuth.getCurrentUser().getPhotoUrl()).observeForever(new Observer<String>() {
+                            @Override
+                            public void onChanged(String fileUrl) {
+                                if (fileUrl != null) {
+                                    usu.setFotoPerfil(fileUrl);
+                                }
+                                viewModel.anadirUsu(usu);
+                            }
+                        });
+
                     } else {
                         usu.setNombre("Invitado");
                         e.setText(usu.getNombre());
+                        viewModel.anadirUsu(usu);
                     }
 
-                    viewModel.anadirUsu(usu);
-                }else{
+                } else {
+                    usu = usuario;
                     e.setText(usu.getNombre());
 
-                    if(usu.getFotoPerfil() != null) {
+                    if (usu.getFotoPerfil() != null) {
                         Glide.with(getApplication())
                                 .load(usu.getFotoPerfil())
                                 .override(240, 240)
@@ -149,10 +157,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void cambiarIdioma() {
-        if(helper.devolverIdiomaCambiado()) {
+        if (helper.devolverIdiomaCambiado()) {
             switch (helper.devolverIdioma()) {
                 case "English":
                     changeLanguage("en");
@@ -168,24 +177,24 @@ public class MainActivity extends AppCompatActivity {
         helper.guardarIdiomaCambiado(false);
     }
 
-    private void cambiarTema(NavigationView navigationView){
-        if(helper.devolverTemaOscuro()){
+    private void cambiarTema(NavigationView navigationView) {
+        if (helper.devolverTemaOscuro()) {
             navigationView.getHeaderView(0).setBackgroundColor(getResources().getColor(R.color.azul_crosscut));
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             getDelegate().applyDayNight();
-        }else{
+        } else {
             navigationView.getHeaderView(0).setBackgroundColor(getResources().getColor(R.color.azul_pastel));
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             getDelegate().applyDayNight();
         }
     }
 
-    private void imagenGoogle(NavigationView navigationView, ImageView i){
+    private void imagenGoogle(NavigationView navigationView, ImageView i) {
         if (mAuth.getCurrentUser() != null) {
-            if(isGoogleLogin()){
+            if (isGoogleLogin()) {
                 Glide.with(this)
                         .load(mAuth.getCurrentUser().getPhotoUrl())
-                        .override(240,240)
+                        .override(240, 240)
                         .circleCrop()
                         .into(i);
             }
@@ -256,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mAuth.getCurrentUser() == null){
+        if (mAuth.getCurrentUser() == null) {
             redirectToLogin();
         }
     }

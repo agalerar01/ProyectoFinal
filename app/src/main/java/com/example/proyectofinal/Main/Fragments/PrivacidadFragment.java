@@ -96,29 +96,34 @@ public class PrivacidadFragment extends Fragment {
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
-                    public void onActivityResult(ActivityResult result) { //  Se ejecuta automáticamente cuando el usuario selecciona una imagen o cancela.
-                        // Si se ha seleccionado una imagen, la recuperamos del parámetro del método
+                    public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                            selectedImageUri = result.getData().getData();  // URI de la imagen seleccionada
-                            fotoBlob = ImageUtils.uriToBlob(requireContext().getContentResolver(), selectedImageUri); // Conseguimos el BLOB a partir de la URI
+                            selectedImageUri = result.getData().getData();
+                            fotoBlob = ImageUtils.uriToBlob(requireContext().getContentResolver(), selectedImageUri);
 
                             viewModel.devolverUsuPorCorreo(mAuth.getCurrentUser().getEmail()).observe(getViewLifecycleOwner(), new Observer<Usuario>() {
                                 @Override
                                 public void onChanged(Usuario usuario) {
-                                    try {
-                                        usuario.setFotoPerfil(viewModel.uploadImageUsu(selectedImageUri));
+                                    if (usuario == null) return;
 
-                                        Glide.with(requireActivity())
-                                                .load(usuario.getFotoPerfil())
-                                                .override(240,240)
-                                                .circleCrop()
-                                                .into(binding.fotoPerfilDrawer);
-                                    } catch (IOException e) {
-                                        throw new RuntimeException(e);
-                                    }
+                                    viewModel.uploadImageUsu(selectedImageUri).observe(getViewLifecycleOwner(), new Observer<String>() {
+                                        @Override
+                                        public void onChanged(String fileUrl) {
+                                            if (fileUrl != null) {
+                                                usuario.setFotoPerfil(fileUrl);
+
+                                                Glide.with(requireActivity())
+                                                        .load(usuario.getFotoPerfil())
+                                                        .override(240, 240)
+                                                        .circleCrop()
+                                                        .into(binding.fotoPerfilDrawer);
+
+                                                viewModel.actualizarUsuario(usuario);
+                                            }
+                                        }
+                                    });
                                 }
                             });
-                            // Muestra la imagen en el ImageView
                             binding.fotoPerfilDrawer.setVisibility(View.VISIBLE);
                         }
                     }

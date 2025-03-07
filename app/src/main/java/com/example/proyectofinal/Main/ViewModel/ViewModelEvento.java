@@ -52,34 +52,26 @@ public class ViewModelEvento extends AndroidViewModel {
     public LiveData<Boolean> aniadirEvento(Evento evento, Uri imageFileUri) {
         MutableLiveData<Boolean> resultadoLiveData = new MutableLiveData<>();
 
-        try {
-            // Convertimos el Uri en un File para enviarlo a Supabase
-            // Más abajo tienes el código de esa clase estática
-            if(imageFileUri != null) {
+        if (imageFileUri != null) {
+            try {
                 File imageFile = ImageUtils.getFileFromUri(getApplication().getApplicationContext(), imageFileUri);
 
-                // Usamos switchMap para esperar a que la imagen se suba antes de guardar el anuncio
                 return Transformations.switchMap(rep.uploadImage(imageFile), fileUrl -> {
                     if (fileUrl != null) {
-                        // Creamos el anuncio solo si tenemos la URL de la imagen
                         evento.aniadirFoto(fileUrl);
                         return rep.anadirEvento(evento);
                     } else {
-                        // Si la subida falla, devolvemos false
                         resultadoLiveData.postValue(false);
                         return resultadoLiveData;
                     }
                 });
-            }else{
-                return rep.anadirEvento(evento);
+            } catch (IOException e) {
+                resultadoLiveData.postValue(false);
+                return resultadoLiveData;
             }
-
-        } catch (IOException e) {
-            // Capturamos posibles errores en la conversión del archivo
-            resultadoLiveData.postValue(false);
+        } else {
+            return rep.anadirEvento(evento);
         }
-
-        return resultadoLiveData;
     }
 
     public LiveData<Boolean> anadirUsu(Usuario usu){
@@ -96,9 +88,18 @@ public class ViewModelEvento extends AndroidViewModel {
         return repUsu.devolverUsuPorCorreo(correo);
     }
 
-    public String uploadImageUsu(Uri uri) throws IOException {
-        File fileUri = ImageUtils.getFileFromUri(getApplication().getApplicationContext(), uri);
+    public LiveData<String> uploadImageUsu(Uri uri){
+        File fileUri = null;
+        try {
+            fileUri = ImageUtils.getFileFromUri(getApplication().getApplicationContext(), uri);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return rep.uploadImageUsu(fileUri);
+    }
+
+    public void actualizarUsuario(Usuario usu){
+        repUsu.actualizarUsu(usu);
     }
 }

@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,12 +47,17 @@ public class UsuarioRepository {
                     if(querySnapshot.isEmpty()) {
                         usu.postValue(null);
                     }else{
-                        for (DocumentSnapshot doc : querySnapshot) {
-                            usu.postValue(doc.toObject(Usuario.class));
-                        }
+                        usu.postValue(querySnapshot.getDocuments().get(0).toObject(Usuario.class));
                     }
                 });
 
         return usu;
+    }
+
+    public void actualizarUsu(Usuario usu){
+
+        db.collection("Usuarios")
+                .document(usu.getId())
+                .set(usu, SetOptions.merge());
     }
 }

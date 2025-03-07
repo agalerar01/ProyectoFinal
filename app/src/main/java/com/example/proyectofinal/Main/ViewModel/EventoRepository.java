@@ -2,6 +2,7 @@ package com.example.proyectofinal.Main.ViewModel;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -186,40 +187,34 @@ public class EventoRepository {
         return liveDataUrl;
     }
 
-    public String uploadImageUsu(File imageFile) {
-        List<String> Url = new ArrayList<>();
+    public LiveData<String> uploadImageUsu(File imageFile) {
+        MutableLiveData<String> liveDataUrl = new MutableLiveData<>();
 
-        // Crear el cuerpo de la petición para enviar a Supabase (en él se envía el fichero)
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
 
-        // Llamada a la API de Supabase
-        // Param 1: Tu API KEY (Autenticación)
-        // Param 2: nombre de tu bucket
-        // Param 3: nombre con el que se creará el fichero en Supabase
-        // Param 4: cuerpo de la petición (imagen)
         Call<Void> call = helperSupabase.uploadImage("Bearer " + Constantes.API_KEY, "foto_perfil", imageFile.getName(), body);
 
-        // Enviamos la petición en segundo plano
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    // Si todo va bien, recuperamos la URL pública de la imagen en Supabase
-                    // Esta URL será la que guardemos en nuestra base de datos
                     String fileUrl = response.raw().request().url().toString();
-                    // Almacenamos el valor en el LiveData
-                    Url.add(fileUrl);
+                    Log.d("DEBUG", "Imagen subida con éxito: " + fileUrl);
+                    liveDataUrl.postValue(fileUrl);
+                } else {
+                    Log.e("ERROR", "Error en la respuesta de Supabase: " + response.code());
+                    liveDataUrl.postValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                // Si no se ha podido completar la petición, devolvemos null
+                Log.e("ERROR", "Fallo en la subida de imagen", t);
+                liveDataUrl.postValue(null);
             }
         });
 
-        // Devolvemos el LiveData con la URL de nuestra imagen
-        return Url.get(0);
+        return liveDataUrl;
     }
 }
