@@ -44,4 +44,6 @@
     <string name="settings">Setings</string>
     <string name="details">Details Of the event</string>
     <string name="eventcreation">Event creation</string>
+    <string name="comments">Comments</string>
+    <string name="savecomment">Save Comment</string>
 </resources>

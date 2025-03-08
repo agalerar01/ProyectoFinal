@@ -19,7 +19,9 @@ import android.widget.Toast;
 import com.example.proyectofinal.Main.Controladores.FotoAdapter;
 import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
 import com.example.proyectofinal.Main.Model.Apuntado;
+import com.example.proyectofinal.Main.Model.Comentario;
 import com.example.proyectofinal.Main.Model.Evento;
+import com.example.proyectofinal.Main.Model.Usuario;
 import com.example.proyectofinal.Main.ViewModel.EventoRepository;
 import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
 import com.example.proyectofinal.R;
@@ -60,26 +62,6 @@ public class DetallesFragment extends Fragment {
         ViewModelEvento viewModelEvento = new ViewModelProvider(requireActivity()).get(ViewModelEvento.class);
         NavController navController = Navigation.findNavController(requireView());
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-
-        executor.execute(() ->  {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            getActivity().runOnUiThread(() -> {
-                binding.progressBar2.setVisibility(View.GONE);
-                binding.nombre.setVisibility(View.VISIBLE);
-                binding.ciudad.setVisibility(View.VISIBLE);
-                binding.calle.setVisibility(View.VISIBLE);
-                binding.descripcion.setVisibility(View.VISIBLE);
-                binding.fechaLimite.setVisibility(View.VISIBLE);
-                binding.recyclerFotos.setVisibility(View.VISIBLE);
-                binding.apuntarse.setVisibility(View.VISIBLE);
-            });
-        });
-
         viewModelEvento.eventoElegido.observe(getViewLifecycleOwner(), new Observer<Evento>() {
             @Override
             public void onChanged(Evento evento) {
@@ -98,6 +80,20 @@ public class DetallesFragment extends Fragment {
 
                 ad.establecerListaFotos(evento.getlUrls());
                 ad.notifyDataSetChanged();
+
+                binding.progressBar2.setVisibility(View.GONE);
+                binding.nombre.setVisibility(View.VISIBLE);
+                binding.ciudad.setVisibility(View.VISIBLE);
+                binding.calle.setVisibility(View.VISIBLE);
+                binding.descripcion.setVisibility(View.VISIBLE);
+                binding.fechaLimite.setVisibility(View.VISIBLE);
+                binding.recyclerFotos.setVisibility(View.VISIBLE);
+                binding.apuntarse.setVisibility(View.VISIBLE);
+
+                if(helper.devolverMostrarComentarios()){
+                    binding.botoncomentario.setVisibility(View.VISIBLE);
+                    binding.recyclerComentario.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -121,6 +117,38 @@ public class DetallesFragment extends Fragment {
                 rep.actualizarEvento(eventoElegido);
 
                 Toast.makeText(requireContext(),"Te has añadido al evento. Esperamos verte alli", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.botoncomentario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.textLayoutComentario.setVisibility(View.VISIBLE);
+                binding.guardarcomentario.setVisibility(View.VISIBLE);
+            }
+        });
+
+        binding.guardarcomentario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(binding.comentario.getText().toString().equalsIgnoreCase("")){
+                    binding.comentario.setError("El comentario no puede estar vacio");
+                }else{
+                    viewModelEvento.devolverUsuPorCorreo(mAuth.getCurrentUser().getEmail()).observe(getViewLifecycleOwner(), new Observer<Usuario>() {
+                        @Override
+                        public void onChanged(Usuario usuario) {
+                            Comentario comentario = new Comentario();
+
+                            comentario.setUsuario(usuario.getNombre());
+                            if(helper.devolverMostrarCorreoComentarios()){
+                                comentario.setCorreo(usuario.getCorreo());
+                            }
+                            comentario.setComentario(binding.comentario.getText().toString());
+
+                            eventoElegido.aniadirComentario(comentario);
+                        }
+                    });
+                }
             }
         });
     }

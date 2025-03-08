@@ -40,4 +40,6 @@
     <string name="settings">Ajustes</string>
     <string name="details">Detalles del evento</string>
     <string name="eventcreation">Creacion de evento</string>
+    <string name="comments">Comentarios</string>
+    <string name="savecomment">Guardar Comentario</string>
 </resources>

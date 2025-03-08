@@ -130,7 +130,7 @@ public class Evento {
         lApuntados.add(apuntado);
     }
 
-    public void aniadirFoto(Comentario comentario) {
+    public void aniadirComentario(Comentario comentario) {
         lComentarios.add(comentario);
     }
 }

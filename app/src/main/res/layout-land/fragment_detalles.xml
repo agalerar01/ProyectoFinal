@@ -162,6 +162,42 @@
                 android:layout_gravity="center"
                 android:text="@string/join" />
 
+            <Button
+                android:id="@+id/botoncomentario"
+                android:visibility="gone"
+                android:layout_width="152dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center"
+                android:text="@string/comments" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textLayoutComentario"
+                android:layout_width="300dp"
+                android:layout_height="100dp"
+                android:visibility="gone"
+                android:layout_gravity="center">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/comentario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/comments" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/guardarcomentario"
+                android:visibility="gone"
+                android:layout_width="152dp"
+                android:layout_height="43dp"
+                android:layout_gravity="center"
+                android:text="@string/savecomment" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerComentario"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
