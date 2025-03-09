@@ -127,6 +127,9 @@ public class DetallesFragment extends Fragment {
                     public void onChanged(Usuario usuario) {
                         if(usuario.getCorreo().equals(evento.getCreador())){
                             binding.aniadirFoto.setVisibility(View.VISIBLE);
+                            binding.apuntarse.setVisibility(View.GONE);
+                            binding.genteapuntada.setVisibility(View.VISIBLE);
+                            binding.genteapuntada.setText(binding.genteapuntada.getText()+" "+evento.getlApuntados().size());
                         }
                     }
                 });

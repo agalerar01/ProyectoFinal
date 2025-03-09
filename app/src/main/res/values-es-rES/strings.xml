@@ -42,4 +42,5 @@
     <string name="eventcreation">Creacion de evento</string>
     <string name="comments">Comentarios</string>
     <string name="savecomment">Guardar Comentario</string>
+    <string name="joined">Gente apuntada: </string>
 </resources>

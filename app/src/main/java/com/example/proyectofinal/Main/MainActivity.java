@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
@@ -22,6 +23,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.bumptech.glide.Glide;
 import com.example.proyectofinal.Login.ActivityLogin;
 import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
+import com.example.proyectofinal.Main.Model.Evento;
 import com.example.proyectofinal.Main.Model.Usuario;
 import com.example.proyectofinal.Main.ViewModel.UsuarioRepository;
 import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
@@ -37,6 +39,9 @@ import com.google.firebase.auth.UserInfo;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -148,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void cambiarIdioma() {

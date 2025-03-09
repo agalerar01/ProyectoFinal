@@ -25,7 +25,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"> <!-- Cambié match_parent a wrap_content aquí -->
+                android:orientation="vertical">
 
 
                 <View
@@ -138,6 +138,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/genteapuntada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="@string/joined"
+                    android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/apuntarse"

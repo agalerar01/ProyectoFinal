@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,9 +25,12 @@ import com.example.proyectofinal.Main.Model.Evento;
 import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
 import com.example.proyectofinal.R;
 import com.example.proyectofinal.databinding.FragmentNuevaEventoBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -35,6 +39,9 @@ public class NuevaEventoFragment extends Fragment {
 
     FragmentNuevaEventoBinding binding;
     SharedPreferencesHelper helper;
+    boolean noMostrado = true;
+    ViewModelEvento viewModel;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +58,7 @@ public class NuevaEventoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ViewModelEvento viewModel = new ViewModelProvider(requireActivity()).get(ViewModelEvento.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(ViewModelEvento.class);
         NavController navController = Navigation.findNavController(requireView());
 
         viewModel.recuperarEventosProximo().observe(getViewLifecycleOwner(), new Observer<Evento>() {
@@ -109,6 +116,7 @@ public class NuevaEventoFragment extends Fragment {
                     binding.fechas.setVisibility(View.GONE);
                     binding.recyclerProximoEvento.setVisibility(View.GONE);
                 }
+                mostrarPopUp();
             }
         });
     }
@@ -118,4 +126,50 @@ public class NuevaEventoFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         return sdf.format(date);
     }
+
+    private void mostrarPopUp(){
+
+        if (noMostrado) {
+            if(helper.devolverRecordatorio()) {
+                Calendar calendar = Calendar.getInstance();
+
+                calendar.add(Calendar.DAY_OF_MONTH, -1);
+                Date fechaMenosUnDia = calendar.getTime();
+
+                int diasASumar = helper.devolverDiasRecordatorio();
+
+                calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_MONTH, diasASumar+1);
+                Date fechaMasXDias = calendar.getTime();
+
+                viewModel.recuperarEventosPorFechaYParticipacion(fechaMenosUnDia.getTime(),fechaMasXDias.getTime(), mAuth.getCurrentUser().getEmail())
+                        .observe(this, new Observer<List<Evento>>() {
+                            @Override
+                            public void onChanged(List<Evento> eventos) {
+                                Evento evento = null;
+                                if(eventos != null) {
+                                    for(Evento e : eventos){
+                                        for(int i =0; i < e.getlApuntados().size(); i++){
+                                            if(e.getlApuntados().get(i).getCorreo().equals(mAuth.getCurrentUser().getEmail())){
+                                                evento = e;
+                                            }
+                                        }
+                                    }
+                                    if (evento != null) {
+                                        new AlertDialog.Builder(requireContext(), androidx.appcompat.R.style.Theme_AppCompat_Dialog)
+                                                .setTitle("Aviso de evento proximo")
+                                                .setMessage("Estabas apuntado al evento " + evento.getNombre() + " sera en la cidad " + evento.getCiudad()
+                                                        + " en la calle " + evento.getCalle() + " esperamos verte alli :D")
+                                                .setPositiveButton("Muchas Gracias", (dialog, which) -> {
+                                                })
+                                                .show();
+                                    }
+                                }
+                            }
+                        });
+            }
+            noMostrado = false;
+        }
+    }
+
 }

@@ -111,6 +111,29 @@ public class EventoRepository {
         return eventosLiveData;
     }
 
+    public LiveData<List<Evento>> recuperarEventosPorFechaYParticipacion(long timestamp,long timestamp2, String email){
+        MutableLiveData<List<Evento>> eventosLiveData = new MutableLiveData<>();
+        List<Evento> lEventos = new ArrayList<>();
+
+        db.collection("Eventos")
+                .orderBy("fechaInicio", Query.Direction.DESCENDING)
+                .whereGreaterThan("fechaInicio", timestamp)
+                .whereLessThan("fechaInicio", timestamp2)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        for(DocumentSnapshot doc : querySnapshot){
+                            lEventos.add(doc.toObject(Evento.class));
+                        }
+                        eventosLiveData.setValue(lEventos);
+                    } else {
+                        eventosLiveData.setValue(null);
+                    }
+                });
+
+        return eventosLiveData;
+    }
+
     public LiveData<List<Evento>> recuperarEventosPorNombre(String nom){
         MutableLiveData<List<Evento>> eventosLiveData = new MutableLiveData<>();
         List<Evento> lEventos = new ArrayList<>();

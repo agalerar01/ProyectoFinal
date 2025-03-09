@@ -13,10 +13,13 @@ import androidx.lifecycle.Transformations;
 import com.example.proyectofinal.Main.ImageUtils;
 import com.example.proyectofinal.Main.Model.Evento;
 import com.example.proyectofinal.Main.Model.Usuario;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewModelEvento extends AndroidViewModel {
@@ -106,5 +109,9 @@ public class ViewModelEvento extends AndroidViewModel {
 
     public void actualizarEvento(Evento evento){
         rep.actualizarEvento(evento);
+    }
+
+    public LiveData<List<Evento>> recuperarEventosPorFechaYParticipacion(long timestamp,long timestamp2, String email){
+        return rep.recuperarEventosPorFechaYParticipacion(timestamp, timestamp2, email);
     }
 }
