@@ -41,6 +41,10 @@ public class EventoAdapter {
         notifyDataSetChanged();
     }
 
+    public Evento recuperarPorPosicio(int pos){
+        return la.recuperarPorPosicio(pos);
+    }
+
 
     public void notifyDataSetChanged(){
         la.notifyDataSetChanged();
@@ -106,6 +110,10 @@ public class EventoAdapter {
             Date date = new Date(timestamp);
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             return sdf.format(date);
+        }
+
+        public Evento recuperarPorPosicio(int pos) {
+            return lEventos.get(pos);
         }
     }
 }

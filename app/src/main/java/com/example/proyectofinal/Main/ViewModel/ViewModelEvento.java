@@ -114,4 +114,8 @@ public class ViewModelEvento extends AndroidViewModel {
     public LiveData<List<Evento>> recuperarEventosPorFechaYParticipacion(long timestamp,long timestamp2, String email){
         return rep.recuperarEventosPorFechaYParticipacion(timestamp, timestamp2, email);
     }
+
+    public void eliminarEvento(Evento evento) {
+        rep.eliminarEvento(evento);
+    }
 }

@@ -252,4 +252,9 @@ public class EventoRepository {
 
         return liveDataUrl;
     }
+
+    public void eliminarEvento(Evento evento) {
+        db.collection("Eventos").document(evento.getId())
+                .delete();
+    }
 }

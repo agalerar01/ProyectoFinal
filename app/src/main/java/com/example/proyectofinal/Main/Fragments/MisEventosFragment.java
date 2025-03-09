@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +51,34 @@ public class MisEventosFragment extends Fragment {
 
         EventoAdapter ad = new EventoAdapter();
         binding.recyclerLista.setAdapter(ad.recuperarAdapter(getLayoutInflater(),navController,R.id.action_misEventosFragment_to_detallesFragment, this.getView(),viewModel));
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT
+        ) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int pos = viewHolder.getAdapterPosition();
+                Evento evento = ad.recuperarPorPosicio(pos);
+
+                viewModel.eliminarEvento(evento);
+
+                viewModel.recuperarEventos().observe(getViewLifecycleOwner(), new Observer<List<Evento>>() {
+                    @Override
+                    public void onChanged(List<Evento> eventos) {
+                        ad.establecerListaEventos(eventos);
+                        ad.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+
+        itemTouchHelper.attachToRecyclerView(binding.recyclerLista);
 
         viewModel.recuperarEventos().observe(getViewLifecycleOwner(), new Observer<List<Evento>>() {
             @Override
