@@ -17,17 +17,18 @@
 
         <TextView
             android:id="@+id/view_Nombre"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
+            android:layout_width="192dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:autoSizeTextType="uniform"
             android:textAlignment="center"
             android:textSize="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.253"
+            app:layout_constraintHorizontal_bias="0.181"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.526" />
 
         <TextView
             android:id="@+id/fechaViewHolder"
@@ -35,10 +36,10 @@
             android:layout_height="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.605"
+            app:layout_constraintHorizontal_bias="0.697"
             app:layout_constraintStart_toStartOf="@+id/view_Nombre"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.516" />
+            app:layout_constraintVertical_bias="0.483" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

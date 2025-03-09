@@ -1,7 +1,15 @@
 package com.example.proyectofinal.Main.Fragments;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -11,6 +19,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +28,7 @@ import android.widget.Toast;
 import com.example.proyectofinal.Main.Controladores.ComentarioAdapter;
 import com.example.proyectofinal.Main.Controladores.FotoAdapter;
 import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
+import com.example.proyectofinal.Main.ImageUtils;
 import com.example.proyectofinal.Main.Model.Apuntado;
 import com.example.proyectofinal.Main.Model.Comentario;
 import com.example.proyectofinal.Main.Model.Evento;
@@ -43,6 +53,9 @@ public class DetallesFragment extends Fragment {
     Evento eventoElegido;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     SharedPreferencesHelper helper;
+    boolean mostrar = true;
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
+    private Uri selectedImageUri;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -108,6 +121,15 @@ public class DetallesFragment extends Fragment {
                         ad.notifyDataSetChanged();
                     }
                 }
+
+                viewModelEvento.devolverUsuPorCorreo(mAuth.getCurrentUser().getEmail()).observe(getViewLifecycleOwner(), new Observer<Usuario>() {
+                    @Override
+                    public void onChanged(Usuario usuario) {
+                        if(usuario.getCorreo().equals(evento.getCreador())){
+                            binding.aniadirFoto.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
             }
         });
 
@@ -142,8 +164,15 @@ public class DetallesFragment extends Fragment {
         binding.botoncomentario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.textLayoutComentario.setVisibility(View.VISIBLE);
-                binding.guardarcomentario.setVisibility(View.VISIBLE);
+                if(mostrar) {
+                    binding.textLayoutComentario.setVisibility(View.VISIBLE);
+                    binding.guardarcomentario.setVisibility(View.VISIBLE);
+                    mostrar = false;
+                }else{
+                    binding.textLayoutComentario.setVisibility(View.GONE);
+                    binding.guardarcomentario.setVisibility(View.GONE);
+                    mostrar = true;
+                }
             }
         });
 
@@ -172,6 +201,35 @@ public class DetallesFragment extends Fragment {
                         }
                     });
                 }
+            }
+        });
+
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) { //  Se ejecuta automáticamente cuando el usuario selecciona una imagen o cancela.
+                        // Si se ha seleccionado una imagen, la recuperamos del parámetro del método
+                        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                            selectedImageUri = result.getData().getData();  // URI de la imagen seleccionada
+                            viewModelEvento.uploadImageUsu(selectedImageUri).observe(getViewLifecycleOwner(), new Observer<String>() {
+                                @Override
+                                public void onChanged(String s) {
+                                    eventoElegido.aniadirFoto(s);
+
+                                    viewModelEvento.actualizarEvento(eventoElegido);
+                                }
+                            });
+                        }
+                    }
+                }
+        );
+
+        binding.aniadirFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                imagePickerLauncher.launch(intent);
             }
         });
     }

@@ -118,6 +118,7 @@ public class EventoRepository {
         db.collection("Eventos")
                 .orderBy("nombre")
                 .startAt(nom)
+                .endAt(nom + "\uf8ff")
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     for(DocumentSnapshot doc : querySnapshot){
@@ -142,7 +143,9 @@ public class EventoRepository {
         List<Evento> lEventos = new ArrayList<>();
 
         db.collection("Eventos")
-                .whereEqualTo("ciudad", nom)
+                .orderBy("ciudad")
+                .startAt(nom)
+                .endAt(nom + "\uf8ff")
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     for(DocumentSnapshot doc : querySnapshot){

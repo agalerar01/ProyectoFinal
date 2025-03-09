@@ -157,15 +157,23 @@
             <Button
                 android:id="@+id/apuntarse"
                 android:visibility="gone"
-                android:layout_width="152dp"
+                android:layout_width="wrap_content"
                 android:layout_height="43dp"
                 android:layout_gravity="center"
                 android:text="@string/join" />
 
             <Button
+                android:id="@+id/aniadirFoto"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="43dp"
+                android:layout_gravity="center"
+                android:text="@string/setphoto" />
+
+            <Button
                 android:id="@+id/botoncomentario"
                 android:visibility="gone"
-                android:layout_width="152dp"
+                android:layout_width="wrap_content"
                 android:layout_height="43dp"
                 android:layout_gravity="center"
                 android:text="@string/comments" />
