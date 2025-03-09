@@ -13,6 +13,7 @@ import androidx.lifecycle.Transformations;
 import com.example.proyectofinal.Main.ImageUtils;
 import com.example.proyectofinal.Main.Model.Evento;
 import com.example.proyectofinal.Main.Model.Usuario;
+import com.google.firebase.firestore.SetOptions;
 
 import java.io.File;
 import java.io.IOException;
@@ -101,5 +102,9 @@ public class ViewModelEvento extends AndroidViewModel {
 
     public void actualizarUsuario(Usuario usu){
         repUsu.actualizarUsu(usu);
+    }
+
+    public void actualizarEvento(Evento evento){
+        rep.actualizarEvento(evento);
     }
 }

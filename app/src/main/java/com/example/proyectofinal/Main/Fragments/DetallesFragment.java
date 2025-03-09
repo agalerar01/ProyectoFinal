@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.proyectofinal.Main.Controladores.ComentarioAdapter;
 import com.example.proyectofinal.Main.Controladores.FotoAdapter;
 import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
 import com.example.proyectofinal.Main.Model.Apuntado;
@@ -41,7 +42,6 @@ public class DetallesFragment extends Fragment {
     FragmentDetallesBinding binding;
     Evento eventoElegido;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    EventoRepository rep = new EventoRepository();
     SharedPreferencesHelper helper;
 
     @Override
@@ -72,14 +72,18 @@ public class DetallesFragment extends Fragment {
                 binding.descripcion.setText(evento.getDescripcion());
                 binding.fechaLimite.setText("["+formatearFecha(evento.getFechaInicio())+"] / ["+formatearFecha(evento.getFechaFinal())+"]");
 
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-                binding.recyclerFotos.setLayoutManager(gridLayoutManager);
+                if(evento.getlUrls() != null) {
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+                    binding.recyclerFotos.setLayoutManager(gridLayoutManager);
 
-                FotoAdapter ad = new FotoAdapter();
-                binding.recyclerFotos.setAdapter(ad.recuperarAdapter(getLayoutInflater(),navController, R.id.action_misEventosFragment_to_detallesFragment, view,viewModelEvento, requireActivity()));
+                    FotoAdapter ad = new FotoAdapter();
+                    binding.recyclerFotos.setAdapter(ad.recuperarAdapter(getLayoutInflater(), navController, R.id.action_misEventosFragment_to_detallesFragment, view, viewModelEvento, requireActivity()));
 
-                ad.establecerListaFotos(evento.getlUrls());
-                ad.notifyDataSetChanged();
+                    ad.establecerListaFotos(evento.getlUrls());
+                    ad.notifyDataSetChanged();
+
+                    binding.recyclerFotos.setVisibility(View.VISIBLE);
+                }
 
                 binding.progressBar2.setVisibility(View.GONE);
                 binding.nombre.setVisibility(View.VISIBLE);
@@ -87,12 +91,22 @@ public class DetallesFragment extends Fragment {
                 binding.calle.setVisibility(View.VISIBLE);
                 binding.descripcion.setVisibility(View.VISIBLE);
                 binding.fechaLimite.setVisibility(View.VISIBLE);
-                binding.recyclerFotos.setVisibility(View.VISIBLE);
                 binding.apuntarse.setVisibility(View.VISIBLE);
 
                 if(helper.devolverMostrarComentarios()){
                     binding.botoncomentario.setVisibility(View.VISIBLE);
                     binding.recyclerComentario.setVisibility(View.VISIBLE);
+
+                    if(evento.getlComentarios() != null){
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
+                        binding.recyclerComentario.setLayoutManager(gridLayoutManager);
+
+                        ComentarioAdapter ad = new ComentarioAdapter();
+                        binding.recyclerComentario.setAdapter(ad.recuperarAdapter(getLayoutInflater(), navController, R.id.action_misEventosFragment_to_detallesFragment, view, viewModelEvento, requireActivity()));
+
+                        ad.establecerListaComentarios(evento.getlComentarios());
+                        ad.notifyDataSetChanged();
+                    }
                 }
             }
         });
@@ -109,12 +123,17 @@ public class DetallesFragment extends Fragment {
                 if(isGoogleLogin()){
                     apuntado.setNombre(mAuth.getCurrentUser().getDisplayName());
                 }else{
-
+                    viewModelEvento.devolverUsuPorCorreo(mAuth.getCurrentUser().getEmail()).observe(getViewLifecycleOwner(), new Observer<Usuario>() {
+                        @Override
+                        public void onChanged(Usuario usuario) {
+                            apuntado.setNombre(usuario.getNombre());
+                        }
+                    });
                 }
 
                 eventoElegido.aniadirParticipante(apuntado);
 
-                rep.actualizarEvento(eventoElegido);
+                viewModelEvento.actualizarEvento(eventoElegido);
 
                 Toast.makeText(requireContext(),"Te has añadido al evento. Esperamos verte alli", Toast.LENGTH_SHORT).show();
             }
@@ -140,12 +159,16 @@ public class DetallesFragment extends Fragment {
                             Comentario comentario = new Comentario();
 
                             comentario.setUsuario(usuario.getNombre());
-                            if(helper.devolverMostrarCorreoComentarios()){
+                            if (helper.devolverMostrarCorreoComentarios()) {
                                 comentario.setCorreo(usuario.getCorreo());
                             }
                             comentario.setComentario(binding.comentario.getText().toString());
 
                             eventoElegido.aniadirComentario(comentario);
+
+                            viewModelEvento.actualizarEvento(eventoElegido);
+
+                            binding.comentario.setText("");
                         }
                     });
                 }

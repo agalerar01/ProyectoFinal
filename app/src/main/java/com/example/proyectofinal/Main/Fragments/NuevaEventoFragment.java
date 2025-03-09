@@ -16,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.proyectofinal.Main.Controladores.ComentarioAdapter;
 import com.example.proyectofinal.Main.Controladores.EventoAdapter;
 import com.example.proyectofinal.Main.Controladores.FotoAdapter;
+import com.example.proyectofinal.Main.Controladores.SharedPreferencesHelper;
 import com.example.proyectofinal.Main.Model.Evento;
 import com.example.proyectofinal.Main.ViewModel.ViewModelEvento;
 import com.example.proyectofinal.R;
@@ -32,12 +34,15 @@ import java.util.concurrent.Executors;
 public class NuevaEventoFragment extends Fragment {
 
     FragmentNuevaEventoBinding binding;
+    SharedPreferencesHelper helper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentNuevaEventoBinding.inflate(getLayoutInflater(), container, false);
+
+        helper = new SharedPreferencesHelper(requireContext());
 
         return binding.getRoot();
     }
@@ -59,14 +64,33 @@ public class NuevaEventoFragment extends Fragment {
                     binding.descripcion.setText(evento.getDescripcion());
                     binding.fechas.setText("[" + formatearFecha(evento.getFechaInicio()) + "] / [" + formatearFecha(evento.getFechaFinal()) + "]");
 
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-                    binding.recyclerProximoEvento.setLayoutManager(gridLayoutManager);
+                    if (evento.getlUrls() != null) {
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+                        binding.recyclerProximoEvento.setLayoutManager(gridLayoutManager);
 
-                    FotoAdapter ad = new FotoAdapter();
-                    binding.recyclerProximoEvento.setAdapter(ad.recuperarAdapter(getLayoutInflater(), navController, R.id.action_misEventosFragment_to_detallesFragment, view, viewModel, requireActivity()));
+                        FotoAdapter ad = new FotoAdapter();
+                        binding.recyclerProximoEvento.setAdapter(ad.recuperarAdapter(getLayoutInflater(), navController, R.id.action_misEventosFragment_to_detallesFragment, view, viewModel, requireActivity()));
 
-                    ad.establecerListaFotos(evento.getlUrls());
-                    ad.notifyDataSetChanged();
+                        ad.establecerListaFotos(evento.getlUrls());
+                        ad.notifyDataSetChanged();
+
+                        binding.recyclerProximoEvento.setVisibility(View.VISIBLE);
+                    }
+
+                    if(helper.devolverMostrarComentarios()){
+                        binding.recyclerComentario.setVisibility(View.VISIBLE);
+
+                        if(evento.getlComentarios() != null){
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
+                            binding.recyclerComentario.setLayoutManager(gridLayoutManager);
+
+                            ComentarioAdapter ad = new ComentarioAdapter();
+                            binding.recyclerComentario.setAdapter(ad.recuperarAdapter(getLayoutInflater(), navController, R.id.action_misEventosFragment_to_detallesFragment, view, viewModel, requireActivity()));
+
+                            ad.establecerListaComentarios(evento.getlComentarios());
+                            ad.notifyDataSetChanged();
+                        }
+                    }
 
                     binding.progressBar.setVisibility(View.GONE);
                     binding.textobienvenida.setVisibility(View.GONE);
@@ -75,7 +99,6 @@ public class NuevaEventoFragment extends Fragment {
                     binding.calle.setVisibility(View.VISIBLE);
                     binding.descripcion.setVisibility(View.VISIBLE);
                     binding.fechas.setVisibility(View.VISIBLE);
-                    binding.recyclerProximoEvento.setVisibility(View.VISIBLE);
                 }else{
                     binding.progressBar.setVisibility(View.GONE);
                     binding.textobienvenida.setVisibility(View.VISIBLE);
