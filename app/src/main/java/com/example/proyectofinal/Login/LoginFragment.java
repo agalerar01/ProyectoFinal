@@ -3,6 +3,7 @@ package com.example.proyectofinal.Login;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -43,7 +44,6 @@ public class LoginFragment extends Fragment {
     private ActivityResultLauncher<Intent> googleSignInLauncher;
     private GoogleSignInClient googleSignInClient;
     private static final int RC_SIGN_IN = 9001;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

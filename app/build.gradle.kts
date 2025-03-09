@@ -67,6 +67,9 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.13.2")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
 
+    implementation ("com.firebaseui:firebase-ui-auth:8.0.0")
+    implementation ("com.google.firebase:firebase-auth:21.0.1")
+
     // Retrofit para realizar peticiones HTTP
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
