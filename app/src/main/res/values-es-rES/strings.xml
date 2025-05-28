@@ -33,6 +33,11 @@
     <string name="privacity">Privacidad</string>
     <string name="changephoto">Cambiar foto</string>
     <string name="appearance">Apariencia</string>
+    <string-array name="languagues">
+        <item>Ingles</item>
+        <item>Español</item>
+        <item>Frances</item>
+    </string-array>
     <string name="restartapp">Necesitas reiniciar la aplicacion para aplicar los cambios</string>
     <string name="newevent">Proximo Evento</string>
     <string name="searchtittle">Busqueda</string>
@@ -43,4 +48,6 @@
     <string name="comments">Comentarios</string>
     <string name="savecomment">Guardar Comentario</string>
     <string name="joined">Gente apuntada: </string>
+    <string name="joinedFragment">Apuntado</string>
+    <string name="no_events_signed_up">Aún no te has apuntado a ningún evento, ¿por qué no lo intentas?</string>
 </resources>

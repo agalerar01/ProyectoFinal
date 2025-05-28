@@ -46,4 +46,9 @@
         android:name="com.example.proyectofinal.Main.Fragments.CrearEventoFragment"
         android:label="@string/eventcreation"
         tools:layout="@layout/fragment_crear_evento" />
+    <fragment
+        android:id="@+id/apuntadoFragment"
+        android:name="com.example.proyectofinal.Main.Fragments.ApuntadoFragment"
+        android:label="@string/joinedFragment"
+        tools:layout="@layout/fragment_apuntado" />
 </navigation>

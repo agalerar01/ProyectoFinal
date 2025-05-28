@@ -33,6 +33,11 @@
     <string name="privacity">Confidentialité</string>
     <string name="changephoto">Changer la photo</string>
     <string name="appearance">Apparence</string>
+    <string-array name="languagues">
+        <item>Anglais</item>
+        <item>Espagnol</item>
+        <item>Français</item>
+    </string-array>
     <string name="restartapp">Vous devez redémarrer l\'application pour appliquer les changements</string>
     <string name="newevent">Prochain Événement</string>
     <string name="searchtittle">Recherche</string>
@@ -40,4 +45,9 @@
     <string name="settings">Paramètres</string>
     <string name="details">Détails de l\'événement</string>
     <string name="eventcreation">Création d\'événement</string>
+    <string name="comments">Commentaires</string>
+    <string name="savecomment">Enregistrer le commentaire</string>
+    <string name="joined">Personnes ayant rejoint : </string>
+    <string name="joinedFragment">Rejoint</string>
+    <string name="no_events_signed_up">Tu ne t es encore inscrit à aucun événement — pourquoi ne pas essayer ?</string>
 </resources>

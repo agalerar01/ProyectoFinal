@@ -47,4 +47,6 @@
     <string name="comments">Comments</string>
     <string name="savecomment">Save Comment</string>
     <string name="joined">People that joined: </string>
+    <string name="joinedFragment">Joined</string>
+    <string name="no_events_signed_up">You haven’t signed up for any events yet — why not give it a try?</string>
 </resources>

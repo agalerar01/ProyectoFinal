@@ -17,9 +17,9 @@
         android:title="@string/myevents" />
 
     <item
-        android:id="@+id/separador"
-        android:title=" "
-        android:enabled="false" />
+        android:id="@+id/apuntadoFragment"
+
+        android:title="@string/joinedFragment" />
 
     <item
         android:id="@+id/separador2"
