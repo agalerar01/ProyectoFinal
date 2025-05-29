@@ -141,24 +141,30 @@ public class DetallesFragment extends Fragment {
             public void onClick(View v) {
                 Apuntado apuntado = new Apuntado();
 
-                if(helper.devolverMostrarComentarios()) {
+                if(helper.devolverMostrarCorreoEvento()) {
                     apuntado.setCorreo(mAuth.getCurrentUser().getEmail());
                 }
 
                 if(isGoogleLogin()){
                     apuntado.setNombre(mAuth.getCurrentUser().getDisplayName());
+
+                    eventoElegido.aniadirParticipante(apuntado);
+
+                    viewModelEvento.actualizarEvento(eventoElegido);
                 }else{
                     viewModelEvento.devolverUsuPorCorreo(mAuth.getCurrentUser().getEmail()).observe(getViewLifecycleOwner(), new Observer<Usuario>() {
                         @Override
                         public void onChanged(Usuario usuario) {
                             apuntado.setNombre(usuario.getNombre());
+
+                            eventoElegido.aniadirParticipante(apuntado);
+
+                            viewModelEvento.actualizarEvento(eventoElegido);
                         }
                     });
                 }
 
-                eventoElegido.aniadirParticipante(apuntado);
 
-                viewModelEvento.actualizarEvento(eventoElegido);
 
                 Toast.makeText(requireContext(),"Te has añadido al evento. Esperamos verte alli", Toast.LENGTH_SHORT).show();
             }

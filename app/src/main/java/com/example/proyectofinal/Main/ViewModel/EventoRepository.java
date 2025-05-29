@@ -257,4 +257,22 @@ public class EventoRepository {
         db.collection("Eventos").document(evento.getId())
                 .delete();
     }
+
+    public LiveData<List<Evento>> recuperarEventosPorApuntado(String nombre) {
+        MutableLiveData<List<Evento>> eventosLiveData = new MutableLiveData<>();
+        List<Evento> lEventos = new ArrayList<>();
+
+        db.collection("Eventos")
+                .whereArrayContains("lApuntados", nombre)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    for(DocumentSnapshot doc : querySnapshot){
+                        lEventos.add(doc.toObject(Evento.class));
+                    }
+
+                    eventosLiveData.setValue(lEventos);
+                });
+
+        return eventosLiveData;
+    }
 }

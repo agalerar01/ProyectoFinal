@@ -118,4 +118,8 @@ public class ViewModelEvento extends AndroidViewModel {
     public void eliminarEvento(Evento evento) {
         rep.eliminarEvento(evento);
     }
+
+    public LiveData<List<Evento>> recuperarEventosApuntado(String nombre) {
+        return  rep.recuperarEventosPorApuntado(nombre);
+    }
 }

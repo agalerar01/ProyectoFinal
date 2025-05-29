@@ -50,5 +50,9 @@
         android:id="@+id/apuntadoFragment"
         android:name="com.example.proyectofinal.Main.Fragments.ApuntadoFragment"
         android:label="@string/joinedFragment"
-        tools:layout="@layout/fragment_apuntado" />
+        tools:layout="@layout/fragment_apuntado" >
+        <action
+            android:id="@+id/action_apuntadoFragment_to_detallesFragment"
+            app:destination="@id/detallesFragment" />
+    </fragment>
 </navigation>
