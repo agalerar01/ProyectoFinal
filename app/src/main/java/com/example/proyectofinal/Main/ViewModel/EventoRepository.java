@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.proyectofinal.Main.Constantes;
 import com.example.proyectofinal.Main.Controladores.ConexionSupabase;
 import com.example.proyectofinal.Main.Controladores.SupabaseHelper;
+import com.example.proyectofinal.Main.Model.Apuntado;
 import com.example.proyectofinal.Main.Model.Evento;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -263,11 +264,18 @@ public class EventoRepository {
         List<Evento> lEventos = new ArrayList<>();
 
         db.collection("Eventos")
-                .whereArrayContains("lApuntados", nombre)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     for(DocumentSnapshot doc : querySnapshot){
-                        lEventos.add(doc.toObject(Evento.class));
+                       List<Apuntado> lApuntados = doc.toObject(Evento.class).getlApuntados();
+
+                       if(!lApuntados.isEmpty()){
+                           for (Apuntado a : lApuntados){
+                               if(a.getNombre().equals(nombre)){
+                                   lEventos.add(doc.toObject(Evento.class));
+                               }
+                           }
+                       }
                     }
 
                     eventosLiveData.setValue(lEventos);

@@ -131,6 +131,17 @@ public class DetallesFragment extends Fragment {
                             binding.genteapuntada.setVisibility(View.VISIBLE);
                             binding.genteapuntada.setText(binding.genteapuntada.getText()+" "+evento.getlApuntados().size());
                         }
+
+                        for(Apuntado a : evento.getlApuntados()){
+                            if(a.getNombre().equals(usuario.getNombre())){
+                                binding.apuntarse.setVisibility(View.GONE);
+                            }
+                        }
+
+                        if(usuario.getNombre().equals("Invitado")){
+                            binding.apuntarse.setVisibility(View.GONE);
+                            Toast.makeText(requireContext(),"Necesitas un nombre de usuario para apuntarte a un evento", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
             }

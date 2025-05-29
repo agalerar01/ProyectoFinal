@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nuevaNoticiaFragment, R.id.busquedaFragment, R.id.misEventosFragment
+                R.id.nuevaNoticiaFragment, R.id.busquedaFragment, R.id.misEventosFragment, R.id.apuntadoFragment
         ).setOpenableLayout(binding.drawerLayout).build();
 
         if (mAuth.getCurrentUser() == null) {

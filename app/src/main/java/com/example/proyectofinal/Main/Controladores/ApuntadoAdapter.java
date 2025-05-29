@@ -35,6 +35,11 @@ public class ApuntadoAdapter {
         return la;
     }
 
+    public Evento recuperarPorPosicio(int pos){
+        return la.recuperarPorPosicio(pos);
+    }
+
+
     public void establecerListaApuntados(List<Evento> lEventos){
         la.establecerListaApuntados(lEventos);
         notifyDataSetChanged();
@@ -95,6 +100,9 @@ public class ApuntadoAdapter {
             navController.navigate(id);
         }
 
+        public Evento recuperarPorPosicio(int pos){
+            return lEventos.get(pos);
+        }
         public void establecerListaApuntados(List<Evento> lEventos){
             this.lEventos = lEventos;
         }

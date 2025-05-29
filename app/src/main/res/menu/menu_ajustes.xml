@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/aparienciaFragment"
-        android:icon="@drawable/common_google_signin_btn_text_dark"
+        android:icon="@drawable/apariencia"
         android:title="@string/appearance"/>
 
     <item
         android:id="@+id/privacidadFragment"
-        android:icon="@drawable/common_google_signin_btn_text_dark"
+        android:icon="@drawable/privacidad"
         android:title="@string/privacity"/>
 </menu>
