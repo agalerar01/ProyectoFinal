@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
     private void configurarClienteGoogleSignIn() {
         // Configurar Google Sign-In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)) // Usa tu Web client ID
+                .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id)) // Usa tu Web client ID
                 .requestEmail()
                 .build();
 

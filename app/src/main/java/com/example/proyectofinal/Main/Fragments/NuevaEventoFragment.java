@@ -150,9 +150,7 @@ public class NuevaEventoFragment extends Fragment {
                                 if(eventos != null) {
                                     for(Evento e : eventos){
                                         for(int i =0; i < e.getlApuntados().size(); i++){
-                                            if(e.getlApuntados().get(i).getCorreo().equals(mAuth.getCurrentUser().getEmail())){
                                                 evento = e;
-                                            }
                                         }
                                     }
                                     if (evento != null) {
